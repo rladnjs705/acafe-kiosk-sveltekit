@@ -1,59 +1,41 @@
-<script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
-</script>
-
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>아카페</title>
+	<meta name="description" content="acafe demo app" />
 </svelte:head>
 
 <section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+	<div>
+		<div class="app d-flex container-fluid ">
+		  <!-- login form start -->
+		  <div class="row d-flex justify-content-center align-items-center content-auth">
+			<div class="auth-box">
+			  <div class="card auth">
+				<div class="card-header">
+				  <h4>로그인</h4>
+				</div>
+				<form method="post" action="/user/login">
+				  <div class="card-body">
+					<div class="mb-3 input-box">
+					  <label for="userEmail" class="form-label">아이디</label>
+					  <input id="userEmail" name="userEmail" type="email" class="form-control" placeholder="name@example.com" required>
+					</div>
+					<div class="mb-3">
+					  <div class="d-flex justify-content-between">
+						<label for="password" class="form-label">패스워드</label>
+					  </div>
+					  <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+					</div>
+				  </div>
+				  <div class="card-bottom d-flex flex-column">
+	  <!--              <button class="btn btn-primary pt-3 pb-3 mb-3" type="button" onclick="goLogin()">로그인</button>-->
+					<button class="btn btn-primary pt-3 pb-3 mb-3" type="submit">로그인</button>
+					<p class="align-self-end"><span><a href="/user/join">[회원가입]</a></span></p>
+				  </div>
+				</form>
+			  </div>
+			</div>
+		  </div>
+		  <!-- login form end -->
+		</div>
+	  </div>
 </section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>

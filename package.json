@@ -2,9 +2,9 @@
 	"name": "acafe-kiosk-sveltekit",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite --host 0.0.0.0 --port 3000",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "vite preview --host 0.0.0.0 --port 3000",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch"
 	},
@@ -12,6 +12,7 @@
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
 		"@sveltejs/adapter-auto": "^1.0.0",
+		"@sveltejs/adapter-static": "^1.0.6",
 		"@sveltejs/kit": "^1.0.0",
 		"@types/cookie": "^0.5.1",
 		"svelte": "^3.54.0",
@@ -19,5 +20,9 @@
 		"typescript": "^4.9.3",
 		"vite": "^4.0.0"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"sass": "^1.58.0",
+		"scss": "^0.2.4"
+	}
 }
