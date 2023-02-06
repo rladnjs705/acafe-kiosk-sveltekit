@@ -22,7 +22,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@capacitor/android": "^4.6.3",
+		"@capacitor/cli": "^4.6.3",
+		"@capacitor/core": "^4.6.3",
+		"@capacitor/ios": "^4.6.3",
 		"sass": "^1.58.0",
-		"scss": "^0.2.4"
+		"scss": "^0.2.4",
+		"yup": "^0.32.11"
 	}
 }

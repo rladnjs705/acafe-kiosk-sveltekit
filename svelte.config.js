@@ -11,7 +11,19 @@ const config = {
 		  fallback: null,
 		  precompress: false,
 		  strict: true
-		})
+		}),
+		prerender:{
+			//앱으로빌드할 경우 true로 설정합니다. 
+			default:true 
+		}
+		alias: {
+			$lib: './src/lib',
+			$components: './src/lib/components',
+			$images:'./src/lib/images',
+			$styles: './src/lib/styles',
+			$utils:'./src/utils',
+			$stores: './src/stores',
+		},
 	  }
 };
 

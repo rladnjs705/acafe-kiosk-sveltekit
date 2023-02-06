@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">acafe</string>
+    <string name="title_activity_main">acafe</string>
+    <string name="package_name">com.sungbok.acafe</string>
+    <string name="custom_url_scheme">com.sungbok.acafe</string>
+</resources>
