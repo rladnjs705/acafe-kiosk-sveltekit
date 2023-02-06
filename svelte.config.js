@@ -8,14 +8,10 @@ const config = {
 		  // these options are set automatically — see below
 		  pages: 'build',
 		  assets: 'build',
-		  fallback: null,
+		  fallback: 'index.html',
 		  precompress: false,
-		  strict: true
+		  //strict: true
 		}),
-		prerender:{
-			//앱으로빌드할 경우 true로 설정합니다. 
-			default:true 
-		}
 		alias: {
 			$lib: './src/lib',
 			$components: './src/lib/components',

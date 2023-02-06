@@ -3,16 +3,7 @@
 		"src/routes/+layout.js",
 		"src/routes/+layout.js"
 	],
-	"/about": [
-		"src/routes/about/+page.js",
-		"src/routes/+layout.js"
-	],
-	"/sverdle": [
-		"src/routes/sverdle/+page.server.js",
-		"src/routes/+layout.js"
-	],
-	"/sverdle/how-to-play": [
-		"src/routes/sverdle/how-to-play/+page.js",
+	"/user/join": [
 		"src/routes/+layout.js"
 	],
 	"/user/login": [

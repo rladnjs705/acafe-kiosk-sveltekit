@@ -1,10 +1,8 @@
 <script>
-  import { mutation } from 'svelte-apollo';
-  import { ADD_USER } from '/imports/ui/apollo/query';
-  import { router } from 'tinro/cmp/index';
-  import { extractErrors, registerValidateSchema } from '/imports/utils/validates';
+  import { goto } from '$app/navigation';
+  import { extractErrors, registerValidateSchema } from '$utils/validates';
 
-  const addUser = mutation(ADD_USER);
+  //const addUser = mutation(ADD_USER);
 
   let formValues = {
     email: '',
@@ -27,12 +25,12 @@
 
   const onRegister = async () => {
     try {
-      await addUser({variables: formValues});
+      // await addUser({variables: formValues});
       alert('회원 가입이 완료되었습니다. 로그인 해주세요.');
-      router.goto('/login');
+      goto('/user/login');
     }
     catch(error) {
-      console.assert(error);
+      //console.assert(error);
     }
   }
 </script>
@@ -69,7 +67,7 @@
       </div>
       <div class="card-bottom d-flex flex-column">
         <button class="btn btn-primary pt-3 pb-3 mb-3" on:click={onSubmitRegister}>가입하기</button>
-        <p class="align-self-end">이미 회원가입되어 있습니다. <span><a href="/login">[로그인]</a></span></p>
+        <p class="align-self-end">이미 회원가입되어 있습니다. <span><a href="/user/login">[로그인]</a></span></p>
       </div>
     </div>
   </div>
