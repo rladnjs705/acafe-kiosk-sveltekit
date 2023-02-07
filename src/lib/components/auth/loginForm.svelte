@@ -23,7 +23,7 @@ async function onSubmitLogin() {
 
 async function onLogin () {
   try {
-      const response = await fetch('/user/login', {
+      const response = await fetch('/api/user/login', {
       method: 'POST',
       headers: {
         //"accept": "application/json",

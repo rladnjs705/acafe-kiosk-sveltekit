@@ -2,8 +2,6 @@
 import { writable, derived } from 'svelte/store';
 import { ADD_MODE, EDIT_MODE, ALL, ADMIN } from '../utils/constans';
 import { browser } from '$app/environment';
-// import { query } from 'svelte-apollo';
-// import { GET_ME } from '/imports/ui/apollo/query';
 
 function setModalActiveItem() {
   const { subscribe, set } = writable(false);

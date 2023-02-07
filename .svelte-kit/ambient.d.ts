@@ -26,6 +26,9 @@
  * ```
  */
 declare module '$env/static/private' {
+	export const VITE_ADMIN_API: string;
+	export const VITE_ADMIN_PASSWORD: string;
+	export const VITE_FILE_LOCATION: string;
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
 	export const CHROME_CRASHPAD_PIPE_NAME: string;
@@ -138,6 +141,9 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
+		VITE_ADMIN_API: string;
+		VITE_ADMIN_PASSWORD: string;
+		VITE_FILE_LOCATION: string;
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
 		CHROME_CRASHPAD_PIPE_NAME: string;

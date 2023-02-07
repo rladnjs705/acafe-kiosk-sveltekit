@@ -1,1 +1,7 @@
-메뉴
+<script>
+    import MenuForm from '$components/menuMain/main.svelte';
+    import MenuAside from '$components/menuAside/aside.svelte';
+</script>
+
+<MenuForm/>
+<MenuAside/>

@@ -1,8 +1,7 @@
 <script>
   import { goto } from '$app/navigation';
   import { extractErrors, registerValidateSchema } from '$utils/validates';
-
-  //const addUser = mutation(ADD_USER);
+  import Swal from 'sweetalert2';
 
   let formValues = {
     email: '',
@@ -25,11 +24,29 @@
 
   const onRegister = async () => {
     try {
-      // await addUser({variables: formValues});
-      alert('회원 가입이 완료되었습니다. 로그인 해주세요.');
-      goto('/user/login');
+      const response = await fetch('/api/user/create', {
+        method: 'POST',
+        headers: {"accept": "application/json",'Content-Type': 'application/json',},
+        body: JSON.stringify(formValues),
+      });
+      const data = await response.json();
+      
+      if(data.resultCode === 0){
+        Swal.fire({
+          icon: 'success',
+          text: '회원 가입이 완료되었습니다. 로그인 해주세요.'
+        });
+        goto('/user/login');
+      }else{
+        Swal.fire({
+          icon: 'error',
+          text: data.resultMsg
+        });
+      }
+      
     }
     catch(error) {
+      console.error(error);
       //console.assert(error);
     }
   }

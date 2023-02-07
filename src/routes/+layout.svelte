@@ -8,10 +8,8 @@
   	<title>아카페</title>
 </svelte:head>
 
-<div class="app">
-
-	<main>
+<body>
+	<div class="app d-flex container-fluid ">
 		<slot />
-	</main>
-
-</div>
+	</div>
+</body>

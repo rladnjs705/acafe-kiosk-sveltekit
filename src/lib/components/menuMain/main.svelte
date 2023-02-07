@@ -11,12 +11,12 @@
     <div class="main-header-section d-flex flex-column ">
       <ItemSearch />
       <CategoryList />
-      <CategoryForm />
+      <!-- <CategoryForm /> -->
     </div><!-- main-header-section -->
 
     <div class="main-content-section simplebar">
       <ItemList />
-      <ItemForm />
+      <!-- <ItemForm /> -->
     </div><!-- end main-content-section -->
   </div>
 </main><!-- main end -->

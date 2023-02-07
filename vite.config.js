@@ -8,12 +8,15 @@ const config = {
 		cors: {
 			origin: '*',
 			methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-			allowedHeaders: ['Content-Type', 'Authorization']
+			allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With', 'Origin']
 		},
 		proxy: {
-			'/user/login': {
+			'/api': {
 				target : 'http://localhost:8080',
 				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+				secure: false,
+				ws: true
 			},
 		},
 	},
