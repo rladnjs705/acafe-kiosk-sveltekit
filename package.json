@@ -1,6 +1,7 @@
 {
 	"name": "acafe-kiosk-sveltekit",
 	"version": "0.0.1",
+	"proxy": "http://localhost:8080",
 	"scripts": {
 		"dev": "vite --host 0.0.0.0 --port 3000",
 		"build": "vite build",
@@ -26,8 +27,10 @@
 		"@capacitor/cli": "^4.6.3",
 		"@capacitor/core": "^4.6.3",
 		"@capacitor/ios": "^4.6.3",
+		"axios": "^1.3.2",
 		"sass": "^1.58.0",
 		"scss": "^0.2.4",
+		"sweetalert2": "^11.7.1",
 		"yup": "^0.32.11"
 	}
 }

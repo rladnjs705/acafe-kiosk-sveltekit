@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { writable, derived } from 'svelte/store';
 import { ADD_MODE, EDIT_MODE, ALL, ADMIN } from '../utils/constans';
 import { browser } from '$app/environment';
@@ -102,10 +103,10 @@ function setAuthToken() {
   
   const { subscribe, update, set } = writable(isLoginToken);
 
-  const saveAuthToken = ({data: {loginWithPassword}}) => {
+  const saveAuthToken = (data) => {
     try {
-      //localStorage.setItem('Meteor.loginToken', loginWithPassword.authToken);
-      set(loginWithPassword.authToken);
+      localStorage.setItem('token', data.token);
+      set(data.token);
       return true;
     }
     catch(error) {

@@ -24,8 +24,8 @@ export const categoryValidateSchema = yup.object().shape({
 });
 
 export const loginValidateSchema = yup.object().shape({
-  email: yup.string().required('이메일을 입력해 주세요.').email('이메일 형식이 잘 못 되었습니다. '),
-  pwd: yup.string().required('패스워드를 입력해 주세요.'),
+  userEmail: yup.string().required('이메일을 입력해 주세요.').email('이메일 형식이 잘 못 되었습니다. '),
+  password: yup.string().required('패스워드를 입력해 주세요.'),
 });
 
 export const registerValidateSchema = yup.object().shape({

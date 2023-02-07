@@ -2,41 +2,58 @@
   import { goto } from '$app/navigation';
   import { authToken } from '$stores';
   import { extractErrors, loginValidateSchema } from '$utils/validates.js';
-
-//const loginWithPassword = mutation(LOGIN_WITH_PASSWORD);
+  import Swal from 'sweetalert2';
 
 let formValues = {
-  email: '',
-  pwd: ''
+  userEmail: '',
+  password: ''
 }
-
-const loginWithPassword = {variables: formValues};
 
 let errors = {}
 
-const onSubmitLogin = async () => {
+async function onSubmitLogin() {
   try {
-  await loginValidateSchema.validate(formValues, {abortEarly: false});
-  onLogin();
+    await loginValidateSchema.validate(formValues, {abortEarly: false});
+    onLogin();
   }
   catch(error) {
-  errors = await extractErrors(error);
+    errors = extractErrors(error);
   }
 }
 
-const onLogin = async () => {
+async function onLogin () {
   try {
-      const result = {};
-  // const result = await loginWithPassword({variables: formValues});
-  //authToken.saveAuthToken(result);
-  goto('/');
-  }
-  catch(error) {
-  //console.log(error.message)
-      console.log(error)
-  }
-}
+      const response = await fetch('/user/login', {
+      method: 'POST',
+      headers: {
+        //"accept": "application/json",
+        //'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+        body: "userEmail="+formValues.userEmail+"&password="+formValues.password,
+      });
 
+      if (response.ok) {
+        const result = await response.json();
+        authToken.saveAuthToken(result.data);
+        goto("/menu");
+      } else {
+        const result = await response.json();
+        console.log(result.data.error);
+        Swal.fire({
+          icon: 'error',
+          text: result.data.error
+        });
+      }
+
+    } catch (error) {
+      console.log(error);
+      await Swal.fire({
+        icon: 'error',
+        text: "에러입니다"
+      });
+    }
+  }
 </script>
 
 <section>
@@ -49,17 +66,22 @@ const onLogin = async () => {
       <div class="card-header">
         <h4>로그인</h4>
       </div>
-      <form method="post" action="/user/login">
         <div class="card-body">
         <div class="mb-3 input-box">
           <label for="userEmail" class="form-label">아이디</label>
-          <input id="userEmail" name="userEmail" type="email" class="form-control" placeholder="name@example.com" required>
+          <input id="userEmail" name="userEmail" type="email" class="form-control" placeholder="name@example.com" bind:value={formValues.userEmail} class:inputError={errors.userEmail} required>
+          {#if errors.userEmail}
+            <span class="invalid-feedback was-validated">{errors.userEmail}</span>
+          {/if}
         </div>
         <div class="mb-3">
           <div class="d-flex justify-content-between">
           <label for="password" class="form-label">패스워드</label>
           </div>
-          <input id="password" name="password" type="password" class="form-control" placeholder="Password" required>
+          <input id="password" name="password" type="password" class="form-control" placeholder="Password" bind:value={formValues.password} class:inputError={errors.userEmail} required>
+          {#if errors.password}
+            <span class="invalid-feedback was-validated">{errors.password}</span>
+          {/if}         
         </div>
         </div>
         <div class="card-bottom d-flex flex-column">
@@ -67,7 +89,6 @@ const onLogin = async () => {
         <!-- <button class="btn btn-primary pt-3 pb-3 mb-3" type="submit">로그인</button> -->
         <p class="align-self-end"><span><a href="/user/join">[회원가입]</a></span></p>
         </div>
-      </form>
       </div>
     </div>
     </div>
