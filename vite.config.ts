@@ -1,9 +1,10 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vite';
 
-/** @type {import('vite').UserConfig} */
-const config = {
+export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
+		hmr: {overlay:false},
 		port: 3000,
 		cors: {
 			origin: '*',
@@ -12,7 +13,7 @@ const config = {
 		},
 		proxy: {
 			'/api': {
-				target : 'http://localhost:8080',
+				target : 'http://localhost:8080/',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 				secure: false,
@@ -20,6 +21,4 @@ const config = {
 			},
 		},
 	},
-};
-
-export default config;
+});

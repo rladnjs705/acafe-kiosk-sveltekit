@@ -1,7 +1,9 @@
-<script>
+<script lang="ts">
     import MenuForm from '$components/menuMain/main.svelte';
     import MenuAside from '$components/menuAside/aside.svelte';
-</script>
+    import type { PageData } from './$types';
 
-<MenuForm/>
+    export let data:PageData;
+</script>
+<MenuForm data={data}/>
 <MenuAside/>

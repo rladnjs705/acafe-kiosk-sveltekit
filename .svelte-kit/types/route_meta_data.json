@@ -4,6 +4,7 @@
 		"src/routes/+layout.js"
 	],
 	"/menu": [
+		"src/routes/menu/+page.js",
 		"src/routes/+layout.js"
 	],
 	"/user/join": [
