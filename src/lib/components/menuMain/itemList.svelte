@@ -3,9 +3,10 @@
   import Item from './item.svelte';
   import { modalActiveItem, itemList, itemPage, itemPageLock } from '$stores';
 
-  let component;
-  let elementScroll;
-
+  let component:any;
+  let elementScroll:any;
+  let data:any;
+  
   itemList.getItemList();
   $: data = $itemList;
 
@@ -22,7 +23,7 @@
 
     const triggerComputed = () => scrollTop > triggerHeight;
     const scrollTrigger = () => triggerComputed() && !$itemPageLock;
-    const countCheck = () => data.itemPageCount <= $itemPage.pageNumber
+    const countCheck = () => $itemList.totalPage <= $itemPage.pageNumber
 
     if(countCheck()) {
       itemPageLock.set(true);
@@ -34,27 +35,22 @@
     }
   }
 
-  // $: {
-  //   if(component || elementScroll) {
-  //     const element = elementScroll ? elementScroll : component.parentNode;
+  $: {
+    //onScroll 이벤트를 돔에 연동
+    //스크롤 액션 인식
+    if(component || elementScroll) {
+      const element = elementScroll ? elementScroll : component.parentNode;
 
-  //     element.addEventListener('scroll', onScroll);
-  //     element.addEventListener('resize', onScroll);
-  //   }
+      element.addEventListener('scroll', onScroll);
+      element.addEventListener('resize', onScroll);
+    }
 
-  //   //아이템 다음 페이지
-  //   // items.fetchMore({
-  //   //   variables: {
-  //   //     pageNumber: $itemPage.pageNumber,
-  //   //     itemCategoryId: $itemCategorySelected,
-  //   //     search: $itemSearch,
-  //   //   },
-  //   // }).then((result) => {
-  //   //   itemPageLock.set(false);
-  //   //   itemMainLoading.set(false);
-  //   //   itemPageLoading.set(false);
-  //   // });
-  // }
+    //아이템 다음 페이지
+    //페이지 번호가 변하면 fetchMore를 이용해 다음 페이지 값을 불러옴
+    itemList.getItemList($itemPage.pageNumber);
+    itemPageLock.set(false);
+
+  }
 </script>
 
 <!-- itemList start -->

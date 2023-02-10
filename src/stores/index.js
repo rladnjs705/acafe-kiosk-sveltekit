@@ -40,7 +40,7 @@ function setItemFormValue() {
 
 function setItemPage() {
   const initValues = {
-    pageNumber: 1
+    pageNumber: 0
   }
 
   const { subscribe, set, update } = writable({...initValues});
@@ -98,7 +98,7 @@ function setItemCategorySelected() {
 
 function setAuthToken() {
   const defaultValue = '';
-  const isLoginToken = browser ? window.localStorage.getItem('loginToken') ?? defaultValue : defaultValue;
+  const isLoginToken = browser ? window.localStorage.getItem('token') ?? defaultValue : defaultValue;
   
   const { subscribe, update, set } = writable(isLoginToken);
 
@@ -117,7 +117,7 @@ function setAuthToken() {
 
   const checkToken = () => {
     const defaultValue = '';
-    const isToken = browser ? window.localStorage.getItem('loginToken') ?? defaultValue : defaultValue;
+    const isToken = browser ? window.localStorage.getItem('token') ?? defaultValue : defaultValue;
     if(!isToken) set('');
   }
 
@@ -136,16 +136,26 @@ function setAuth() {
     role: '',
   }
 
+  let data = { 
+    params: {
+      authToken : ''
+    }
+  }
+
   const { subscribe, set } = writable({...initValues});
 
   const createAuth = async () => {
     try {
       //const getLoginUser = query(GET_ME);
-      const loginUser = await getLoginUser.refetch();
-
-      const _id = loginUser.data.me._id;
-      const email = loginUser.data.me.emails[0].address;
-      const role = loginUser.data.me.profile.role;
+      //const loginUser = await getLoginUser.refetch();
+      const defaultValue = '';
+      const isLoginToken = browser ? window.localStorage.getItem('token') ?? defaultValue : defaultValue;
+      data.params.authToken = isLoginToken;
+      const response = await axios.get("/api/user/login/info",data);
+      const userInfo = response.data.data;
+      const _id = userInfo.id;
+      const email = userInfo.email;
+      const role = userInfo.role;
 
       set({_id, email, role});
       return;
@@ -289,26 +299,35 @@ function setCategoryList () {
 }
 
 function setItemList () {
-  const initValues = {
-    list: [{
-      itemId : 0,
-      itemName: '',
-      itemPrice: 0,
-      itemImage: '',
-      categoryId: 0
-    }]
+  // const initValues = {
+  //   list: [{
+  //     itemId : 0,
+  //     itemName: '',
+  //     itemPrice: 0,
+  //     itemImage: '',
+  //     categoryId: 0
+  //   }]
+  // }
+  let data = {
+    params: {
+      page: 0,
+      size: 10
+    }
   }
 
   const { subscribe, update, set } = writable();
 
-  const getItemList = async () => {
+  const getItemList = async (pageNumber) => {
     try {
-      let params = {
-        page: 0,
-        size: 15
+      if(pageNumber > 0){
+        itemPageLock.set(true);
+        data.params.page = pageNumber;
+      }else{
+        data.params.page = 0
       }
-      const response = await axios.get("/api/user/items",params);
+      const response = await axios.get("/api/user/items", data);
       set(response.data.data);
+      
     } catch (error) {
       console.log(error);
     } 

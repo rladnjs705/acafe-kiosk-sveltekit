@@ -76,7 +76,7 @@
       <input type="file" class="form-control" id="recipient-name" bind:value={$itemFormValue.itemImage}>
     </div>
     <div class="mb-3">
-      <img src="../images/food_img/KjdgrhOok.png" class="card-img-top" alt="">
+      <img src="/images/food_img/KjdgrhOok.png" class="card-img-top" alt="">
     </div>              
   </div>
   <!-- slot modal-body end -->      

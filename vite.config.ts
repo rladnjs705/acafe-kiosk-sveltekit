@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
-		hmr: {overlay:false},
+		//hmr: {overlay:false},
 		port: 3000,
 		cors: {
 			origin: '*',
