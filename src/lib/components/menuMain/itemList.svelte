@@ -2,6 +2,7 @@
   import ItemLoading from './itemLoading.svelte';
   import Item from './item.svelte';
   import { modalActiveItem, itemList, itemPage, itemPageLock } from '$stores';
+    import axios from 'axios';
 
   let component:any;
   let elementScroll:any;
@@ -10,6 +11,7 @@
   itemList.getItemList();
   $: data = $itemList;
 
+  let isLoading = false;
   const onOpenModalItemForm = () => {
     modalActiveItem.openModal();
   }
@@ -31,8 +33,23 @@
 
     if(scrollTrigger()) {
       console.log('next')
+      //itemPage.nextPage();
+      isLoading = true;
       itemPage.nextPage();
+      getItemList($itemPage.pageNumber);
     }
+  }
+
+  async function getItemList(page:number){
+    let data = {
+    params: {
+      page: page,
+      size: 10
+      }
+    }
+
+    const response = await axios.get("/api/user/items", data);
+    console.log(response.data.data);
   }
 
   $: {
@@ -47,8 +64,8 @@
 
     //아이템 다음 페이지
     //페이지 번호가 변하면 fetchMore를 이용해 다음 페이지 값을 불러옴
-    itemList.getItemList($itemPage.pageNumber);
-    itemPageLock.set(false);
+    // itemList.getItemList($itemPage.pageNumber);
+    // itemPageLock.set(false);
 
   }
 </script>
