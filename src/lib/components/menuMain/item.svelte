@@ -1,12 +1,12 @@
-<script>
-  export let item;
-  import { itemFormMode, itemFormValue, modalActiveItem, isAdmin, orders } from '../../stores';
+<script lang="ts">
+  export let item:any;
+  import { itemFormMode, itemFormValue, modalActiveItem, isAdmin, orders } from '$stores';
 
   const openEditModeActiveItem = () => {
     $itemFormValue._id = item._id;
     $itemFormValue.itemName = item.itemName;
     $itemFormValue.itemPrice = item.itemPrice;
-    $itemFormValue.itemCategoryId = item.itemCategoryId;
+    $itemFormValue.categoryId = item.itemCategoryId;
     $itemFormValue.itemImage = item.itemImage;
 
     itemFormMode.onEditMode();
@@ -24,6 +24,7 @@
 
 </script>
 <div class="col mb-2">
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div class="card ct-shadow-sm menu-item-box" on:click={onClickMenu} >
     <div class="img-box" style="background-image: url(http://localhost:3000/images{item.itemImage});"></div>
     <div class="card-body">

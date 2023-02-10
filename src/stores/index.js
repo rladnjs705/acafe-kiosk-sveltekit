@@ -2,6 +2,7 @@
 import { writable, derived } from 'svelte/store';
 import { ADD_MODE, EDIT_MODE, ALL, ADMIN } from '../utils/constans';
 import { browser } from '$app/environment';
+import axios from 'axios';
 
 function setModalActiveItem() {
   const { subscribe, set } = writable(false);
@@ -21,8 +22,8 @@ function setItemFormValue() {
   const initValues = {
     _id: '',
     itemName: '',
-    itemCategoryId:'',
-    itemPrice: '',
+    categoryId: 0,
+    itemPrice: 0,
     itemImage: '',
   }
 
@@ -262,6 +263,63 @@ function setOrders() {
   }
 }
 
+function setCategoryList () {
+  const initValues = {
+    list: [{
+      categoryId: '',
+      categoryName: ''
+    }]
+  }
+
+  const { subscribe, update, set } = writable();
+
+  const getCategoryList = async () => {
+    try {
+      const response = await axios.get("/api/user/categories");
+      set(response.data.data);
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+  return {
+    subscribe,
+    getCategoryList,
+    update
+  }
+}
+
+function setItemList () {
+  const initValues = {
+    list: [{
+      itemId : 0,
+      itemName: '',
+      itemPrice: 0,
+      itemImage: '',
+      categoryId: 0
+    }]
+  }
+
+  const { subscribe, update, set } = writable();
+
+  const getItemList = async () => {
+    try {
+      let params = {
+        page: 0,
+        size: 15
+      }
+      const response = await axios.get("/api/user/items",params);
+      set(response.data.data);
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+  return {
+    subscribe,
+    getItemList,
+    update
+  }
+}
+
 export const modalActiveCategory = writable(false);
 export const modalActiveItem = setModalActiveItem();
 export const itemFormValue = setItemFormValue();
@@ -277,3 +335,5 @@ export const orders = setOrders();
 export const modalActiveComplateOrder = writable(false);
 export const itemMainLoading = writable(false);
 export const itemPageLoading = writable(false);
+export const categoryList = setCategoryList();
+export const itemList = setItemList();
