@@ -59,8 +59,8 @@
       <!-- <div class="invalid-feedback was-validated">이름을 입력해 주세요.</div> -->
     </div>
     <div class="mb-3">
-      <label for="recipient-name" class="col-form-label">메뉴 카테고리:</label>
-      <select name="menu-cateogry-select" class="form-select" bind:value={$itemFormValue.categoryId}>
+      <label for="menuCategory" class="col-form-label">메뉴 카테고리:</label>
+      <select id="menuCategory" name="menuCategory" class="form-select" bind:value={$itemFormValue.categoryId}>
         <option value=''>카테고리 선택</option>
         {#each $categoryList.list as category(category.categoryId)}
           <option value={category.categoryId}>{category.categoryName}</option>
@@ -68,12 +68,12 @@
       </select>
     </div>            
     <div class="mb-3">
-      <label for="message-text" class="col-form-label">메뉴 가격:</label>
-      <input type="text" class="form-control" id="recipient-name" bind:value={$itemFormValue.itemPrice}>
+      <label for="itemPrice" class="col-form-label">메뉴 가격:</label>
+      <input type="text" class="form-control" id="itemPrice" bind:value={$itemFormValue.itemPrice}>
     </div>
     <div class="mb-3">
-      <label for="message-text" class="col-form-label">메뉴 이미지:</label>
-      <input type="file" class="form-control" id="recipient-name" bind:value={$itemFormValue.itemImage}>
+      <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
+      <input type="file" class="form-control" id="itemImage" bind:value={$itemFormValue.itemImage}>
     </div>
     <div class="mb-3">
       <img src="/images/food_img/KjdgrhOok.png" class="card-img-top" alt="">

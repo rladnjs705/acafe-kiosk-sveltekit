@@ -41,15 +41,18 @@
   }
 
   async function getItemList(page:number){
-    let data = {
+    let params = {
     params: {
       page: page,
       size: 10
       }
     }
+    
+    const response = await axios.get("/api/user/items", params);
+    const newArr = [...data.list, ...response.data.data.list];
+    data.list = newArr;
+    itemPageLock.set(false);
 
-    const response = await axios.get("/api/user/items", data);
-    console.log(response.data.data);
   }
 
   $: {
@@ -65,7 +68,7 @@
     //아이템 다음 페이지
     //페이지 번호가 변하면 fetchMore를 이용해 다음 페이지 값을 불러옴
     // itemList.getItemList($itemPage.pageNumber);
-    // itemPageLock.set(false);
+    //itemPageLock.set(false);
 
   }
 </script>
