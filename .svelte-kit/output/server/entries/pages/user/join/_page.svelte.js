@@ -1,5 +1,6 @@
 import { c as create_ssr_component, d as add_attribute, e as escape, v as validate_component } from "../../../../chunks/index2.js";
 import "../../../../chunks/validates.js";
+import "sweetalert2";
 const RegisterForm = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let formValues = { email: "", pwd: "", pwdConfirm: "" };
   let errors = {};

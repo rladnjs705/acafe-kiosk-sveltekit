@@ -1,71 +1,7 @@
 import { c as create_ssr_component, d as add_attribute, e as escape } from "./index2.js";
-import { d as derived, w as writable } from "./index.js";
+import "./index3.js";
 import "./validates.js";
 import "sweetalert2";
-const ADMIN = "admin";
-function setAuthToken() {
-  const defaultValue = "";
-  const isLoginToken = defaultValue;
-  const { subscribe, update, set } = writable(isLoginToken);
-  const saveAuthToken = (data) => {
-    try {
-      localStorage.setItem("token", data.token);
-      set(data.token);
-      return true;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const removeAuthToken = () => set("");
-  const checkToken = () => {
-    set("");
-  };
-  return {
-    subscribe,
-    saveAuthToken,
-    removeAuthToken,
-    checkToken
-  };
-}
-function setAuth() {
-  let initValues = {
-    _id: "",
-    email: "",
-    role: ""
-  };
-  const { subscribe, set } = writable({ ...initValues });
-  const createAuth = async () => {
-    try {
-      const loginUser = await getLoginUser.refetch();
-      const _id = loginUser.data.me._id;
-      const email = loginUser.data.me.emails[0].address;
-      const role = loginUser.data.me.profile.role;
-      set({ _id, email, role });
-      return;
-    } catch (error) {
-      authToken.removeAuthToken();
-      set({ ...initValues });
-      return;
-    }
-  };
-  const resetAuth = () => {
-    authToken.removeAuthToken();
-    set({ ...initValues });
-    return;
-  };
-  return {
-    subscribe,
-    createAuth,
-    resetAuth
-  };
-}
-function setIsAdmin() {
-  const checkRole = derived(auth, ($auth) => $auth.role === ADMIN ? true : false);
-  return checkRole;
-}
-const authToken = setAuthToken();
-const auth = setAuth();
-setIsAdmin();
 const LoginForm = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let formValues = { userEmail: "", password: "" };
   let errors = {};

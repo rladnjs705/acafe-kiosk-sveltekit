@@ -6,7 +6,7 @@ yup.setLocale({
 });
 yup.object().shape({
   itemName: yup.string().required("제품명을 입력해 주세요."),
-  itemCategoryId: yup.string().required("카테고리를 선택해 주세요."),
+  categoryId: yup.string().required("카테고리를 선택해 주세요."),
   itemPrice: yup.number().typeError("가격은 숫자로 입력해야 합니다.").required(),
   itemImage: yup.string().required("이미지를 선택해 주세요.")
 });
