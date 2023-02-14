@@ -43,35 +43,6 @@
     }
   }
 
-  const onDeleteCategory = async(_id:any) => {
-    const result = await sweetConfirm('해당 카테고리를 삭제하겠습니까?');
-    if(result.value){
-      try {
-        const response = await axios.delete("/api/admin/category/delete/"+_id);
-        console.log(response);
-        if(response.status == 200){      
-          clearCategoryForm();
-          Swal.fire({
-            icon: 'success',
-            text: "카테고리가 삭제되었습니다."
-          });
-        }else{
-          Swal.fire({
-            icon: 'error',
-            text: response.data.resultMsg
-          });
-        } 
-      } catch (error) {
-        clearCategoryForm();
-        console.log(error)
-        Swal.fire({
-            icon: 'error',
-            text: error.response.data.resultMsg
-        });
-      }
-    }
-  }
-
   const onEditMode = (category:any) => {
     updateValues.categoryId = category.categoryId;
     updateValues.categoryName = category.categoryName;
@@ -111,7 +82,36 @@
       }
     }
     catch(error) {
-      console.log(`update category error: ${error.message}`)
+      console.log(`update category error: ${error}`)
+    }
+  }
+
+  const onDeleteCategory = async(_id:any) => {
+    const result = await sweetConfirm('해당 카테고리를 삭제하겠습니까?');
+    if(result.value){
+      try {
+        const response = await axios.delete("/api/admin/category/delete/"+_id);
+        console.log(response);
+        if(response.status == 200){      
+          clearCategoryForm();
+          Swal.fire({
+            icon: 'success',
+            text: "카테고리가 삭제되었습니다."
+          });
+        }else{
+          Swal.fire({
+            icon: 'error',
+            text: response.data.resultMsg
+          });
+        } 
+      } catch (error) {
+        clearCategoryForm();
+        console.log(error)
+        Swal.fire({
+            icon: 'error',
+            text: error.response.data.resultMsg
+        });
+      }
     }
   }
 

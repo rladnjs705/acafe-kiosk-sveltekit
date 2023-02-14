@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { writable, derived } from 'svelte/store';
-import { ADD_MODE, EDIT_MODE, ALL, ADMIN } from '../utils/constans';
+import { ADD_MODE, EDIT_MODE, ALL, ADMIN } from '$utils/constans';
 import { browser } from '$app/environment';
 import axios from 'axios';
 
@@ -20,7 +20,7 @@ function setModalActiveItem() {
 
 function setItemFormValue() {
   const initValues = {
-    _id: '',
+    itemId: '',
     itemName: '',
     categoryId: 0,
     itemPrice: 0,
@@ -308,24 +308,36 @@ function setItemList () {
   //     categoryId: 0
   //   }]
   // }
-  let data = {
-    params: {
+    let params = {
       page: 0,
-      size: 10
+      size: 10,
+      itemName:'',
+      categoryId:0,
     }
-  }
 
   const { subscribe, update, set } = writable();
 
-  const getItemList = async (pageNumber) => {
+  const getItemList = async (pageNumber, name, categoryId) => {
     try {
+      if(name != '' && name != null){
+        params.itemName = name;
+      } else{
+        params.itemName = '';
+      }
+
       if(pageNumber > 0){
         itemPageLock.set(true);
-        data.params.page = pageNumber;
+        params.page = pageNumber;
       }else{
-        data.params.page = 0
+        params.page = 0
       }
-      const response = await axios.get("/api/user/items", data);
+
+      if(categoryId > 0 && categoryId != null){
+        params.categoryId = categoryId
+      } else{
+        params.categoryId = 0;
+      }
+      const response = await axios.get("/api/user/items", {params});
       set(response.data.data);
       
     } catch (error) {

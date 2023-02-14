@@ -1,24 +1,91 @@
-<script>
+<script lang="ts">
   import Modal from "../common/modal.svelte";
-  import { modalActiveItem, itemFormValue, categoryList } from '$stores';
+  import { modalActiveItem, itemFormValue, itemFormMode, categoryList, itemList } from '$stores';
   import { itemValidateSchema } from '$utils/validates';
+  import { ADD_MODE, EDIT_MODE } from "$utils/constans";
   import Swal from 'sweetalert2';
   import axios from 'axios';
+    import Item from "./item.svelte";
 
-  categoryList.getCategoryList();
+  $: {
+    if($itemFormMode === ADD_MODE) itemFormValue.resetForm();
+  }
 
   const onAddItem = async () => {
     $itemFormValue.itemPrice = Number($itemFormValue.itemPrice);
     try {
       await itemValidateSchema.validate($itemFormValue, {abortEarly: false});
-      console.log($itemFormValue);
+      const response = await axios.post("/api/admin/item/create", $itemFormValue);
+      if(response.status == 200){
+        clearItemForm();
+        itemList.update(items => {
+          items.list = [response.data.data.item, ...items.list.slice(0, -1)];
+          return items;
+        });
+        Swal.fire({
+          icon: 'success',
+          text: "제품이 추가되었습니다."
+        });
+      }else{
+        Swal.fire({
+          icon: 'error',
+          text: response.data.resultMsg
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onUpdateItem = async () => {
+    $itemFormValue.itemPrice = Number($itemFormValue.itemPrice);
+    const itemId = $itemFormValue.itemId;
+    try {
+      await itemValidateSchema.validate($itemFormValue, {abortEarly: false});
+      const response = await axios.put("/api/admin/item/update", $itemFormValue);
+      if(response.status == 200){
+        clearItemForm();
+        itemList.update(items => {
+          const index = items.list.findIndex((i:any)=> i.itemId === itemId);
+          items.list = [
+            ...items.list.slice(0, index),
+            response.data.data.item,
+            ...items.list.slice(index+1)
+          ]
+          return items;
+        })
+        Swal.fire({
+          icon: 'success',
+          text: "제품이 수정되었습니다."
+        });
+      }else{
+        Swal.fire({
+          icon: 'error',
+          text: response.data.resultMsg
+        });
+      }
+      clearItemForm();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const onDeleteItem = async () => {
+    const result = await sweetConfirm('해당 제품을 삭제하겠습니까?');
+    if(result.value) {
+      const itemId = $itemFormValue.itemId;
       try {
-        const response = await axios.post("/api/admin/item/create", $itemFormValue);
+        await itemValidateSchema.validate($itemFormValue, {abortEarly: false});
+        const response = await axios.delete("/api/admin/item/delete/"+ itemId);
         if(response.status == 200){
-          clearItemForm();
+          clearItemForm();  
+          itemList.update(items => {
+            items.list = items.list.filter((i:any)=> i.itemId !== itemId);
+            return items;
+          })
           Swal.fire({
             icon: 'success',
-            text: "메뉴가 추가되었습니다."
+            text: "제품이 삭제되었습니다."
           });
         }else{
           Swal.fire({
@@ -26,17 +93,20 @@
             text: response.data.resultMsg
           });
         }
-      } catch(error) {
-        clearItemForm();
-        console.log(error)
-        Swal.fire({
-            icon: 'error',
-            text: error.response.data.resultMsg
-        });
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
+  }
+
+  const sweetConfirm = async (msg:string) => {
+    return Swal.fire({
+      text: msg,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: "예",
+      cancelButtonText: "아니오",
+    });
   }
 
   const clearItemForm = () => {
@@ -83,7 +153,18 @@
   
   <!-- slot modal-footer start -->          
   <div class="modal-footer d-flex flex-column align-items-stretch" slot="modal-footer">
-    <button type="button" class="btn btn-primary pt-3 pb-3" on:click={onAddItem}>메뉴 추가</button>
+    {#if $itemFormMode == ADD_MODE}
+      <button type="button" class="btn btn-primary pt-3 pb-3" on:click={onAddItem}>메뉴 추가</button>
+    {:else if $itemFormMode == EDIT_MODE}
+      <div class="row item-bottom">
+        <div class="col">
+          <button type="button" class="btn btn-primary pt-3 pb-3" on:click={onUpdateItem}>메뉴 수정</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-danger pt-3 pb-3" on:click={onDeleteItem}>메뉴 삭제</button>
+        </div>
+      </div>
+    {/if}
   </div>
   <!-- slot modal-footer end -->          
 </Modal>

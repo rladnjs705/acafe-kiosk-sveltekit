@@ -1,19 +1,19 @@
 <script lang="ts">
   import ItemLoading from './itemLoading.svelte';
   import Item from './item.svelte';
-  import { modalActiveItem, itemList, itemPage, itemPageLock } from '$stores';
-    import axios from 'axios';
+  import { modalActiveItem, itemList, itemPage, itemPageLock, itemFormMode, itemCategorySelected, itemSearch } from '$stores';
+  import axios from 'axios';
 
   let component:any;
   let elementScroll:any;
   let data:any;
-  
-  itemList.getItemList();
-  $: data = $itemList;
 
-  let isLoading = false;
+  itemList.getItemList(0);
+  $: data = $itemList; 
+
   const onOpenModalItemForm = () => {
     modalActiveItem.openModal();
+    itemFormMode.onAddMode();
   }
 
   const onScroll = (e:any) => { //스크롤 이벤트 처리
@@ -33,8 +33,6 @@
 
     if(scrollTrigger()) {
       console.log('next')
-      //itemPage.nextPage();
-      isLoading = true;
       itemPage.nextPage();
       getItemList($itemPage.pageNumber);
     }
@@ -42,17 +40,17 @@
 
   async function getItemList(page:number){
     let params = {
-    params: {
-      page: page,
-      size: 10
+        page: page,
+        size: 10,
+        itemName: $itemSearch,
+        categoryId: $itemCategorySelected,
       }
-    }
-    
-    const response = await axios.get("/api/user/items", params);
-    const newArr = [...data.list, ...response.data.data.list];
-    data.list = newArr;
+    const response = await axios.get("/api/user/items", {params});
+    itemList.update(items => {
+      items.list = [...items.list, ...response.data.data.list]
+      return items;
+    });
     itemPageLock.set(false);
-
   }
 
   $: {
@@ -67,9 +65,9 @@
 
     //아이템 다음 페이지
     //페이지 번호가 변하면 fetchMore를 이용해 다음 페이지 값을 불러옴
-    // itemList.getItemList($itemPage.pageNumber);
-    //itemPageLock.set(false);
-
+    // itemList.getItemList($itemPage, $itemSearch);
+    // itemPage.resetPage();
+    // itemPageLock.set(false);
   }
 </script>
 

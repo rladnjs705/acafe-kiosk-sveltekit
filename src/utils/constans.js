@@ -1,4 +1,4 @@
-export const ALL = 'all';
+export const ALL = 0;
 export const ORDER_ADDED = 'ORDER_ADDED';
 export const ADMIN = 'admin';
 export const USER = 'user';
