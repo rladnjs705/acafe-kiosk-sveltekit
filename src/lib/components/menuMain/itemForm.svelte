@@ -99,6 +99,32 @@
     }
   }
 
+  const onUploadFile = async (e:any) => {
+    const { files } = e.target;
+
+    try {
+      if(!files || files.length === 0){
+        return;
+      }
+      const formData = new FormData();
+      formData.append('image', files[0]);
+      axios.post('https://api.imgbb.com/1/upload?key=76f5daf6e6842d92f95bf1f84b2111d3', formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+        console.log(response.data.data.display_url);
+        $itemFormValue.itemImage = response.data.data.display_url;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const sweetConfirm = async (msg:string) => {
     return Swal.fire({
       text: msg,
@@ -143,7 +169,7 @@
     </div>
     <div class="mb-3">
       <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
-      <input type="file" class="form-control" id="itemImage" bind:value={$itemFormValue.itemImage}>
+      <input type="file" class="form-control" id="itemImage" on:change={onUploadFile}>
     </div>
     <div class="mb-3">
       <img src="/images/food_img/KjdgrhOok.png" class="card-img-top" alt="">
