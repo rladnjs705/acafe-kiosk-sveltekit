@@ -101,13 +101,41 @@
 
   const onUploadFile = async (e:any) => {
     const { files } = e.target;
-
+    
     try {
       if(!files || files.length === 0){
+        Swal.fire({
+            icon: 'error',
+            text: "선택된 파일이 없습니다."
+          });
         return;
       }
+
+      const file = files[0];
+
+      // Check file extension
+      const allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+      const fileExtension = file.name.split(".").pop().toLowerCase();
+      if (!allowedExtensions.includes(fileExtension)) {
+        Swal.fire({
+            icon: 'error',
+            text: "이미지 파일만 업로드 가능합니다."
+        });
+        return;
+      }
+
+      // Check file size (in bytes)
+      const allowedSize = 31457280; // 30MB
+      if (file.size > allowedSize) {
+        Swal.fire({
+            icon: 'error',
+            text: "파일 크기가 큽니다. 30Mb아래로 업로드 해주세요."
+        });
+        return;
+      }
+
       const formData = new FormData();
-      formData.append('image', files[0]);
+      const upload = formData.append('image', files[0]);
       axios.post('https://api.imgbb.com/1/upload?key=76f5daf6e6842d92f95bf1f84b2111d3', formData,{
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -116,6 +144,7 @@
       .then(response => {
         console.log(response.data.data.display_url);
         $itemFormValue.itemImage = response.data.data.display_url;
+        return upload;
       })
       .catch(error => {
         console.log(error);
@@ -171,9 +200,16 @@
       <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
       <input type="file" class="form-control" id="itemImage" on:change={onUploadFile}>
     </div>
-    <div class="mb-3">
-      <img src="/images/food_img/KjdgrhOok.png" class="card-img-top" alt="">
-    </div>              
+    {#if $itemFormValue.itemImage}
+      <div class="mb-3">
+        <img src={$itemFormValue.itemImage} class="card-img-top" alt="">
+      </div>              
+      <!-- {:else}
+        <div class="mb-3">
+          <img src="/images/noImage.jpg" class="card-img-top" alt="">
+        </div>  -->
+    {/if}
+    
   </div>
   <!-- slot modal-body end -->      
   
