@@ -13,7 +13,7 @@ export default defineConfig({
 		},
 		proxy: {
 			'/api': {
-				target : 'https://port-0-acafe-springboot-1jx7m2gldi7x7be.gksl2.cloudtype.app',
+				target : 'http://java',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 				secure: false,
