@@ -7,6 +7,9 @@
 		"src/routes/menu/+page.ts",
 		"src/routes/+layout.js"
 	],
+	"/users": [
+		"src/routes/+layout.js"
+	],
 	"/user/join": [
 		"src/routes/+layout.js"
 	],

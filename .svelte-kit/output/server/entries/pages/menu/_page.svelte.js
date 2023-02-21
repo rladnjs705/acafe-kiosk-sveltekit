@@ -128,7 +128,7 @@ const Item = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_isAdmin();
   $$unsubscribe_itemFormValue();
   return `<div class="${"col mb-2"}">
-  <div class="${"card ct-shadow-sm menu-item-box"}"><div class="${"img-box"}" style="${"background-image: url(http://localhost:3000/" + escape(item.itemImage, true) + ");"}"></div>
+  <div class="${"card ct-shadow-sm menu-item-box"}"><div class="${"img-box"}" style="${"background-image: url(" + escape(item.itemImage, true) + ");"}"></div>
     <div class="${"card-body"}"><h5 class="${"card-title"}">${escape(item.itemName)}</h5>
       <p class="${"card-text"}">${escape(item.itemPrice)} 원</p></div></div></div>`;
 });
@@ -207,7 +207,8 @@ const ItemForm = create_ssr_component(($$result, $$props, $$bindings, slots) => 
       <input type="${"text"}" class="${"form-control"}" id="${"itemPrice"}"${add_attribute("value", $itemFormValue.itemPrice, 0)}></div>
     <div class="${"mb-3"}"><label for="${"itemImage"}" class="${"col-form-label"}">메뉴 이미지:</label>
       <input type="${"file"}" class="${"form-control"}" id="${"itemImage"}"></div>
-    <div class="${"mb-3"}"><img src="${"/images/food_img/KjdgrhOok.png"}" class="${"card-img-top"}" alt="${""}"></div></div>`;
+    ${$itemFormValue.itemImage ? `<div class="${"mb-3"}"><img${add_attribute("src", $itemFormValue.itemImage, 0)} class="${"card-img-top"}" alt="${""}"></div>              
+      ` : ``}</div>`;
         },
         "modal-title": () => {
           return `<h4 slot="${"modal-title"}">메뉴 추가</h4>`;

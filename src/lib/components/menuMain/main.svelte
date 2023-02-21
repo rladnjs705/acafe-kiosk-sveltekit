@@ -1,12 +1,9 @@
 <script lang="ts">
-
   import CategoryForm from './categoryForm.svelte';
   import CategoryList from './categoryList.svelte';
   import ItemSearch from './itemSearch.svelte';
   import ItemList from './itemList.svelte';
   import ItemForm from './itemForm.svelte';
-  import { auth } from '$stores';
-  auth.createAuth();
 </script>
 
 <main><!-- main start -->

@@ -34,7 +34,7 @@
 </script>
 <div class="col mb-2">
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="card ct-shadow-sm menu-item-box" on:click={openEditModeActiveItem} >
+  <div class="card ct-shadow-sm menu-item-box" on:click={onClickMenu} >
     <div class="img-box" style="background-image: url({item.itemImage});"></div>
     <div class="card-body">
       <h5 class="card-title">{item.itemName}</h5>

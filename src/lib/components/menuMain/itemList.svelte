@@ -1,7 +1,7 @@
 <script lang="ts">
   import ItemLoading from './itemLoading.svelte';
   import Item from './item.svelte';
-  import { modalActiveItem, itemList, itemPage, itemPageLock, itemFormMode, itemCategorySelected, itemSearch } from '$stores';
+  import { modalActiveItem, itemList, itemPage, itemPageLock, itemFormMode, itemCategorySelected, itemSearch, isAdmin } from '$stores';
   import axios from 'axios';
 
   let component:any;
@@ -73,6 +73,7 @@
 
 <!-- itemList start -->
 <div class="row row-cols-4 g-4 pl-3 pr-3 pt-2 pb-4 list-bg-shadow" bind:this={component}>
+  {#if $isAdmin}
   <div class="col mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <span class="btn-add-modal-show" on:click={onOpenModalItemForm} >
@@ -80,7 +81,8 @@
         <i class='bx bx-plus bx-md' ></i>
       </div>
     </span>
-  </div>                        
+  </div>        
+  {/if}                
   {#if data}
     {#each data.list as item (item.itemId)}
       <Item item={item} />

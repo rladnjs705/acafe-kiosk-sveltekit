@@ -146,6 +146,7 @@ function setAuth() {
 
   const createAuth = async () => {
     try {
+      console.log(data.params.authToken);
       //const getLoginUser = query(GET_ME);
       //const loginUser = await getLoginUser.refetch();
       const defaultValue = '';

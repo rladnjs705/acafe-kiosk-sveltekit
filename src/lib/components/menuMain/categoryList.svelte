@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { modalActiveCategory, categoryList, itemCategorySelected, itemList, itemPageLock } from '$stores';
+  import { modalActiveCategory, categoryList, itemCategorySelected, itemList, itemPageLock, isAdmin } from '$stores';
   import { ALL } from '$utils/constans';
 
   $: data = $categoryList; 
@@ -34,9 +34,12 @@
       {:else}
         <p class="d-flex align-items-center">Loading</p>
     {/if}
-    <li>
-      <a href="#null" class="d-flex align-items-center add" on:click={onOpenModalActiveCateogry} >+관리</a>
-    </li>                                                                                
+
+    {#if $isAdmin}
+      <li>
+        <a href="#null" class="d-flex align-items-center add" on:click={onOpenModalActiveCateogry} >+관리</a>
+      </li>         
+    {/if}                                                                       
   </ul>
 </div>
 <!-- category end --> 
