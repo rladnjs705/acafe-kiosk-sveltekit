@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto } from '$app/navigation';
   import { authToken } from '$stores';
   import { extractErrors, loginValidateSchema } from '$utils/validates.js';
@@ -9,7 +9,7 @@ let formValues = {
   password: ''
 }
 
-let errors = {}
+let errors:any = {}
 
 async function onSubmitLogin() {
   try {

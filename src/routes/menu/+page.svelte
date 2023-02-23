@@ -4,7 +4,6 @@
     import { authToken, auth } from '$stores';
 
     $: {
-        console.log($authToken)
         if($authToken){
             auth.createAuth();
         } else {

@@ -1,14 +1,20 @@
 <script lang="ts">
   import Modal from "../common/modal.svelte";
   import { modalActiveItem, itemFormValue, itemFormMode, categoryList, itemList } from '$stores';
-  import { itemValidateSchema } from '$utils/validates';
+  import { extractErrors, itemValidateSchema } from '$utils/validates';
   import { ADD_MODE, EDIT_MODE } from "$utils/constans";
   import Swal from 'sweetalert2';
   import axios from 'axios';
-    import Item from "./item.svelte";
+
+  let errors:any = {};
 
   $: {
-    if($itemFormMode === ADD_MODE) itemFormValue.resetForm();
+    if($itemFormMode === ADD_MODE) {
+      itemFormValue.resetForm();
+      errors = {};
+    };
+
+    if($itemFormMode === EDIT_MODE) errors = {};
   }
 
   const onAddItem = async () => {
@@ -19,7 +25,11 @@
       if(response.status == 200){
         clearItemForm();
         itemList.update(items => {
-          items.list = [response.data.data.item, ...items.list.slice(0, -1)];
+          if(items.list.length >= 10){
+            items.list = [response.data.data.item, ...items.list.slice(0,-1)];
+          }else{
+            items.list = [response.data.data.item, ...items.list];
+          }
           return items;
         });
         Swal.fire({
@@ -33,7 +43,7 @@
         });
       }
     } catch (error) {
-      console.log(error);
+      errors = extractErrors(error);
     }
   }
 
@@ -66,7 +76,7 @@
       }
       clearItemForm();
     } catch (error) {
-      console.log(error);
+      errors = extractErrors(error);
     }
   }
 
@@ -94,7 +104,7 @@
           });
         }
       } catch (error) {
-        console.log(error);
+        errors = extractErrors(error);
       }
     }
   }
@@ -150,7 +160,7 @@
         console.log(error);
       });
     } catch (error) {
-      console.log(error);
+      errors = extractErrors(error);
     }
   }
 
@@ -165,6 +175,7 @@
   }
 
   const clearItemForm = () => {
+    errors = {};
     itemFormValue.resetForm();
     modalActiveItem.closeModal();
   }
@@ -180,25 +191,36 @@
   <div class="modal-body" slot="modal-body">
     <div class="mb-3 ">
       <label for="recipient-name" class="col-form-label">메뉴 이름:</label>
-      <input type="text" class="form-control" id="recipient-name" bind:value={$itemFormValue.itemName}>
-      <!-- <div class="invalid-feedback was-validated">이름을 입력해 주세요.</div> -->
+      <input type="text" class="form-control" id="recipient-name" bind:value={$itemFormValue.itemName} class:inputError={errors.itemName}>
+      {#if errors.itemName}
+        <div class="invalid-feedback was-validated">{errors.itemName}</div>
+      {/if}
     </div>
     <div class="mb-3">
       <label for="menuCategory" class="col-form-label">메뉴 카테고리:</label>
-      <select id="menuCategory" name="menuCategory" class="form-select" bind:value={$itemFormValue.categoryId}>
-        <option value=''>카테고리 선택</option>
+      <select id="menuCategory" name="menuCategory" class="form-select" bind:value={$itemFormValue.categoryId} class:inputError={errors.categoryId}>
+        <option value="">카테고리 선택</option>
         {#each $categoryList.list as category(category.categoryId)}
           <option value={category.categoryId}>{category.categoryName}</option>
         {/each}
       </select>
+      {#if errors.categoryId}
+        <div class="invalid-feedback was-validated">{errors.categoryId}</div>
+      {/if}
     </div>            
     <div class="mb-3">
       <label for="itemPrice" class="col-form-label">메뉴 가격:</label>
-      <input type="text" class="form-control" id="itemPrice" bind:value={$itemFormValue.itemPrice}>
+      <input type="text" class="form-control" id="itemPrice" bind:value={$itemFormValue.itemPrice} class:inputError={errors.itemPrice}>
+      {#if errors.itemPrice}
+        <div class="invalid-feedback was-validated">{errors.itemPrice}</div>
+      {/if}
     </div>
     <div class="mb-3">
       <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
-      <input type="file" class="form-control" id="itemImage" on:change={onUploadFile}>
+      <input type="file" class="form-control" id="itemImage" on:change={onUploadFile} class:inputError={errors.itemImage}>
+      {#if errors.itemImage}
+        <div class="invalid-feedback was-validated">{errors.itemImage}</div>
+      {/if}
     </div>
     {#if $itemFormValue.itemImage}
       <div class="mb-3">

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { itemSearch, itemPage, itemList, itemPageLock } from "$stores";
+  import { itemSearch, itemPage, itemList, itemPageLock, itemMainLoading } from "$stores";
 
   let itemSearchForm:any;
 
@@ -11,6 +11,7 @@
       itemList.getItemList($itemPage, $itemSearch);
       itemPage.resetPage();
       itemPageLock.set(false);
+      itemMainLoading.set(true);
     }
   }
 </script>

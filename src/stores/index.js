@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { writable, derived } from 'svelte/store';
+import { writable, derived, readable } from 'svelte/store';
 import { ADD_MODE, EDIT_MODE, ALL, ADMIN } from '$utils/constans';
 import { browser } from '$app/environment';
 import axios from 'axios';
@@ -22,9 +22,9 @@ function setItemFormValue() {
   const initValues = {
     itemId: '',
     itemName: '',
-    categoryId: 0,
+    categoryId: '',
     itemPrice: 0,
-    itemImage: '',
+    itemImage: 'http://localhost:3000/images/noImage.jpg',
   }
 
   const { subscribe, set } = writable({...initValues});
@@ -146,7 +146,6 @@ function setAuth() {
 
   const createAuth = async () => {
     try {
-      console.log(data.params.authToken);
       //const getLoginUser = query(GET_ME);
       //const loginUser = await getLoginUser.refetch();
       const defaultValue = '';
@@ -188,6 +187,7 @@ function setIsAdmin() {
 
 function setOrders() {
   const initValues = {
+    userId: 0,
     orderPriceSum: 0,
     orderCount: 0,
     orderItems: []
@@ -197,18 +197,20 @@ function setOrders() {
 
   const resetOrder = () => set({...initValues});
 
-  const incrementOrder = (getOrder) => {
+  const incrementOrder = (getOrder, auth) => {
     update(
       datas => {
         let orderPriceSum = datas.orderPriceSum;
         let orderCount = datas.orderCount;
         let orderItems = datas.orderItems;
+        let userId = auth._id;
 
-        const duplicateCheckOrderItem = orderItems.find(item => item._id === getOrder._id);
+        const duplicateCheckOrderItem = orderItems.find(item => item.itemId === getOrder.itemId);
 
         if(duplicateCheckOrderItem) {
+          //선택된 item이 orderItems에 이미 있는경우
           orderItems = orderItems.map(item => {
-            if(item._id === getOrder._id) {
+            if(item.itemId === getOrder.itemId) {
               item.itemPriceSum = item.itemPriceSum + getOrder.itemPrice;
               item.itemCount = item.itemCount + 1;
             }
@@ -216,8 +218,10 @@ function setOrders() {
           });
         }
         else {
+          //선택된 item이 orderItems에 없는 경우
           const newOrder = {
-            _id: getOrder._id,
+            userId: auth._id,
+            itemId: getOrder.itemId,
             itemName: getOrder.itemName,
             itemPrice: getOrder.itemPrice,
             itemPriceSum: getOrder.itemPrice,
@@ -225,13 +229,14 @@ function setOrders() {
           }
           orderItems = [...orderItems, newOrder];
         }
-
+        //공통적으로 처리해야하는 것
         orderPriceSum = orderPriceSum + getOrder.itemPrice;
         orderCount = orderCount + 1;
 
         datas.orderPriceSum = orderPriceSum;
         datas.orderCount = orderCount;
         datas.orderItems = orderItems;
+        datas.userId = userId;
 
         return datas;
       }
@@ -246,13 +251,15 @@ function setOrders() {
         let orderItems = datas.orderItems;
 
         orderItems = orderItems.map(item => {
-          if(item._id === getOrder._id) {
+          if(item.itemId === getOrder.itemId) {
             item.itemPriceSum = item.itemPriceSum - getOrder.itemPrice;
             item.itemCount = item.itemCount - 1;
           }
           return item;
         })
         .filter(item => item.itemCount !== 0);
+
+        console.log(orderCount);
 
         orderPriceSum = orderPriceSum - getOrder.itemPrice;
         orderCount = orderCount - 1;
@@ -265,6 +272,7 @@ function setOrders() {
       }
     )
   }
+  
 
   return {
     subscribe,
@@ -300,15 +308,6 @@ function setCategoryList () {
 }
 
 function setItemList () {
-  // const initValues = {
-  //   list: [{
-  //     itemId : 0,
-  //     itemName: '',
-  //     itemPrice: 0,
-  //     itemImage: '',
-  //     categoryId: 0
-  //   }]
-  // }
     let params = {
       page: 0,
       size: 10,
@@ -340,7 +339,6 @@ function setItemList () {
       }
       const response = await axios.get("/api/user/items", {params});
       set(response.data.data);
-      
     } catch (error) {
       console.log(error);
     } 
@@ -349,6 +347,38 @@ function setItemList () {
     subscribe,
     getItemList,
     update
+  }
+}
+
+function setOrderStream() { 
+  const { subscribe, update, set } = writable();
+  const getOrderList = async () => {
+    try {
+      const response = await axios.get("/api/admin/orders/subscribe");
+      set(response.data);
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+  return {
+    subscribe,
+    update,
+    set,
+    getOrderList
+  }
+}
+
+function setOrderErrors () {
+
+  const { subscribe, update, set } = writable();
+
+  const resetErrors = () => set();
+
+  return {
+    update,
+    resetErrors,
+    subscribe,
+    set,
   }
 }
 
@@ -364,8 +394,10 @@ export const authToken = setAuthToken();
 export const auth = setAuth();
 export const isAdmin = setIsAdmin();
 export const orders = setOrders();
+export const orderErrors = setOrderErrors();
 export const modalActiveComplateOrder = writable(false);
 export const itemMainLoading = writable(false);
 export const itemPageLoading = writable(false);
 export const categoryList = setCategoryList();
 export const itemList = setItemList();
+export const orderStream = setOrderStream();

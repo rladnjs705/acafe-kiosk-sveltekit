@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import OrderList from './orderList.svelte';
   import OrderBottom from './orderBottom.svelte';
   import OrderResultList from './orderResultList.svelte';
@@ -8,6 +8,7 @@
   const onLogout = async () => {
     try {
       authToken.removeAuthToken();
+      goto("/")
     } catch (error) {
       console.log(error);
     }
@@ -39,18 +40,18 @@
       <p>수량</p>
     </div>
   </div>
-  <div class="side-content aside-box simplebar mt-auto">
+  <div class={$isAdmin ? "side-content-admin aside-box simplebar mt-auto" : "side-content aside-box simplebar mt-auto"}>
     <!-- orderList start-->
       {#if $isAdmin}
         <OrderResultList />
       {:else}
-        <OrderList />
+        <OrderList/>
       {/if}
     <!-- orderList end-->
   </div>
-  <div class="side-bottom d-flex flex-column justify-content-center align-items-center">
+  <div class={$isAdmin ? "side-bottom-admin d-flex flex-column justify-content-center align-items-center" : "side-bottom d-flex flex-column justify-content-center align-items-center"}>
     <!-- order bottom start -->
-      {#if !$authToken}
+      {#if !$isAdmin}
         <OrderBottom />
       {/if}
     <!-- order bottom end -->

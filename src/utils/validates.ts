@@ -6,8 +6,8 @@ yup.setLocale({
   }
 });
 
-export const extractErrors = error => {
-  return error.inner.reduce((acc, error) => {
+export const extractErrors = (error:any) => {
+  return error.inner.reduce((acc:any, error:any) => {
     return {...acc, [error.path]: error.message}
   }, {});
 }

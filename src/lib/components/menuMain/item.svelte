@@ -1,6 +1,6 @@
 <script lang="ts">
   export let item:any;
-  import { itemFormMode, itemFormValue, modalActiveItem, isAdmin, orders } from '$stores';
+  import { itemFormMode, itemFormValue, modalActiveItem, isAdmin, orders, auth, orderErrors } from '$stores';
 
   const openEditModeActiveItem = () => {
     $itemFormValue.itemId = item.itemId;
@@ -27,7 +27,8 @@
       openEditModeActiveItem();
     }
     else {
-      orders.incrementOrder(item);
+      orderErrors.resetErrors();
+      orders.incrementOrder(item, $auth);
     }
   }
 
@@ -38,7 +39,7 @@
     <div class="img-box" style="background-image: url({item.itemImage});"></div>
     <div class="card-body">
       <h5 class="card-title">{item.itemName}</h5>
-      <p class="card-text">{item.itemPrice} 원</p>
+      <!-- <p class="card-text">{item.itemPrice} 원</p> -->
     </div>
   </div>
 </div>

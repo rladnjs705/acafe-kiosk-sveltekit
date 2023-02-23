@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { goto } from '$app/navigation';
   import { extractErrors, registerValidateSchema } from '$utils/validates';
   import Swal from 'sweetalert2';
@@ -9,7 +9,7 @@
     pwdConfirm: ''
   }
 
-  let errors = {};
+  let errors:any = {};
 
   const onSubmitRegister = async () => {
     try {

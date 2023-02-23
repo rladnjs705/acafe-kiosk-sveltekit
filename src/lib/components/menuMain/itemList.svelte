@@ -1,7 +1,7 @@
 <script lang="ts">
   import ItemLoading from './itemLoading.svelte';
   import Item from './item.svelte';
-  import { modalActiveItem, itemList, itemPage, itemPageLock, itemFormMode, itemCategorySelected, itemSearch, isAdmin } from '$stores';
+  import { modalActiveItem, itemList, itemPage, itemPageLock, itemFormMode, itemCategorySelected, itemSearch, isAdmin, itemMainLoading } from '$stores';
   import axios from 'axios';
 
   let component:any;
@@ -50,6 +50,7 @@
       items.list = [...items.list, ...response.data.data.list]
       return items;
     });
+    itemMainLoading.set(false);
     itemPageLock.set(false);
   }
 
@@ -62,12 +63,7 @@
       element.addEventListener('scroll', onScroll);
       element.addEventListener('resize', onScroll);
     }
-
-    //아이템 다음 페이지
-    //페이지 번호가 변하면 fetchMore를 이용해 다음 페이지 값을 불러옴
-    // itemList.getItemList($itemPage, $itemSearch);
-    // itemPage.resetPage();
-    // itemPageLock.set(false);
+    itemMainLoading.set(false);
   }
 </script>
 
@@ -88,8 +84,10 @@
       <Item item={item} />
     {/each}
     {:else}
+      {#if $itemMainLoading}
       <!-- Loading-box start-->
-      <ItemLoading />
+        <ItemLoading />
+      {/if}
       <!-- Loading-box end-->
   {/if}
 </div>
