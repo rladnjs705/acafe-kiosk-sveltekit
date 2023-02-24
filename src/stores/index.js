@@ -339,6 +339,7 @@ function setItemList () {
       }
       const response = await axios.get("/api/user/items", {params});
       set(response.data.data);
+      itemMainLoading.set(false);
     } catch (error) {
       console.log(error);
     } 
