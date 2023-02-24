@@ -11,6 +11,14 @@ let formValues = {
 
 let errors:any = {}
 
+const onEnterLogin = (e:any) => {
+    const keyCode = e.keyCode;
+
+    if(keyCode === 13) {
+      onSubmitLogin();
+    }
+  }
+
 async function onSubmitLogin() {
   try {
     await loginValidateSchema.validate(formValues, {abortEarly: false});
@@ -78,7 +86,7 @@ async function onLogin () {
           <div class="d-flex justify-content-between">
           <label for="password" class="form-label">패스워드</label>
           </div>
-          <input id="password" name="password" type="password" class="form-control" placeholder="Password" bind:value={formValues.password} class:inputError={errors.userEmail} required>
+          <input id="password" name="password" type="password" class="form-control" placeholder="Password" bind:value={formValues.password} class:inputError={errors.userEmail} on:keydown={onEnterLogin} required>
           {#if errors.password}
             <span class="invalid-feedback was-validated">{errors.password}</span>
           {/if}         

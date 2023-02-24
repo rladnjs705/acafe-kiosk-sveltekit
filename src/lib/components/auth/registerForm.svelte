@@ -3,10 +3,13 @@
   import { extractErrors, registerValidateSchema } from '$utils/validates';
   import Swal from 'sweetalert2';
 
+
   let formValues = {
     email: '',
     pwd: '',
-    pwdConfirm: ''
+    pwdConfirm: '',
+    userName : '',
+    nickName : '',
   }
 
   let errors:any = {};
@@ -65,6 +68,20 @@
           <input type="text" class="form-control" bind:value={formValues.email} class:inputError={errors.email}> 
           {#if errors.email}
             <span class="invalid-feedback was-validated">{errors.email}</span>
+          {/if}          
+        </div>
+        <div class="mb-3">
+          <label for="userName" class="form-label">이름</label>
+          <input type="text" class="form-control" bind:value={formValues.userName} class:inputError={errors.userName}> 
+          {#if errors.userName}
+            <span class="invalid-feedback was-validated">{errors.userName}</span>
+          {/if}          
+        </div>
+        <div class="mb-3">
+          <label for="birthDate" class="form-label">닉네임</label>
+          <input type="text" class="form-control" bind:value={formValues.nickName} class:inputError={errors.nickName}> 
+          {#if errors.nickName}
+            <span class="invalid-feedback was-validated">{errors.nickName}</span>
           {/if}          
         </div>
         <div class="mb-3">

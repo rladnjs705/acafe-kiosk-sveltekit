@@ -152,7 +152,7 @@ function setAuth() {
       const isLoginToken = browser ? window.localStorage.getItem('token') ?? defaultValue : defaultValue;
       data.params.authToken = isLoginToken;
       const response = await axios.get("/api/user/login/info",data);
-      const userInfo = response.data.data;
+      const userInfo = response.data.data.user;
       const _id = userInfo.id;
       const email = userInfo.email;
       const role = userInfo.role;

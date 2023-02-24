@@ -35,7 +35,10 @@
         notyf.success(`주문이 완료 되었습니다.`);
         Swal.fire({
           icon: 'success',
-          text: "대기번호 : " + response.data.data.order.orderNumber
+          text: "대기번호 : " + response.data.data.order.orderNumber,
+          timer: 3000, // 3초 후 자동으로 닫힘
+          timerProgressBar: true, // 타이머 진행 바 보이기
+          showConfirmButton: false // 확인 버튼 숨기기
         });
         orderStream.getOrderList();
       }

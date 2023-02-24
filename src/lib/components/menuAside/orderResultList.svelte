@@ -2,7 +2,6 @@
   import axios from "axios";
   import { onDestroy } from "svelte";
   let orderList:any[];
-  let timeoutId:NodeJS.Timeout;
 
   getOrders();
 
@@ -10,11 +9,10 @@
     await axios.get("/api/admin/orders/subscribe")
     .then(data => {
       orderList = data.data;
-      timeoutId = setTimeout(getOrders, 2000);
+      getOrders();
     })
     .catch(error => {
       console.log(error);
-      timeoutId = setTimeout(getOrders, 5000);
     });
   }
 
@@ -32,12 +30,6 @@
       console.log(error);
     }
   }
-
-  onDestroy(() => {
-    clearTimeout(timeoutId);
-  });
-
-
 
 </script>
 <!-- order results start -->
