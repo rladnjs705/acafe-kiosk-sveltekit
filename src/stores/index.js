@@ -134,6 +134,8 @@ function setAuth() {
     _id: '',
     email: '',
     role: '',
+    nickName: '',
+    userName: '',
   }
 
   let data = { 
@@ -156,8 +158,10 @@ function setAuth() {
       const _id = userInfo.id;
       const email = userInfo.email;
       const role = userInfo.role;
+      const nickName = userInfo.nickName;
+      const userName = userInfo.userName;
 
-      set({_id, email, role});
+      set({_id, email, role, nickName, userName});
       return;
     }
     catch(error) {

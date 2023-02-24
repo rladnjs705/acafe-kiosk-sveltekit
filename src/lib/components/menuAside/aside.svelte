@@ -45,7 +45,7 @@
     </div>
     <div class="info-box d-flex justify-content-between align-items-center pl-4 pr-4">
       {#if $authToken}
-        <p>{$auth.email} 로그인중</p>
+        <p>{$auth.nickName} 로그인중</p>
       {:else}
         <p>상품 이름</p>
       {/if}
