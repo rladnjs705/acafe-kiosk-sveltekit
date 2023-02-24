@@ -1,6 +1,8 @@
 <script lang="ts">
   import axios from "axios";
+  import { onDestroy } from "svelte";
   let orderList:any[];
+  let timeoutId:NodeJS.Timeout;
 
   getOrders();
 
@@ -8,11 +10,11 @@
     await axios.get("/api/admin/orders/subscribe")
     .then(data => {
       orderList = data.data;
-      setTimeout(getOrders, 2000);
+      timeoutId = setTimeout(getOrders, 2000);
     })
     .catch(error => {
       console.log(error);
-      setTimeout(getOrders, 5000);
+      timeoutId = setTimeout(getOrders, 5000);
     });
   }
 
@@ -31,6 +33,10 @@
     }
   }
 
+  onDestroy(() => {
+    clearTimeout(timeoutId);
+  });
+
 
 
 </script>
@@ -44,7 +50,7 @@
           <ul class="order-inner-list">
             <li class="d-flex justify-content-between date">
               <p class:orderChecked={!order.orderState}>{order.createDate}</p>
-              <p class:orderChecked={!order.orderState}>{order.orderNumber}</p>
+              <p class:orderChecked={!order.orderState}>번호:{order.orderNumber}</p>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <p class="btnOrderCheck" on:click={() => onCheckOrder(order.orderId, order.orderState)}>확인</p>
             </li>        

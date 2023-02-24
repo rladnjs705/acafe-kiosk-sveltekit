@@ -310,7 +310,7 @@ function setCategoryList () {
 function setItemList () {
     let params = {
       page: 0,
-      size: 10,
+      size: 15,
       itemName:'',
       categoryId:0,
     }

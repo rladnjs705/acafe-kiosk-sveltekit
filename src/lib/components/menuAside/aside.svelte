@@ -4,6 +4,18 @@
   import OrderResultList from './orderResultList.svelte';
   import { authToken, auth, isAdmin } from '$stores';
   import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
+
+	let isMobile = false;
+
+	onMount(() => {
+		checkMobile();
+		window.addEventListener('resize', checkMobile);
+	})
+
+	function checkMobile() {
+ 		isMobile = window.innerWidth < 600;
+	}
 
   const onLogout = async () => {
     try {
@@ -16,7 +28,7 @@
 
   const goLogin = () => goto('/user/login');
 </script>
-<aside> <!-- aside start-->
+<aside style={isMobile ? "width:100%;height:100%" : ""}> <!-- aside start-->
   <div class="side-header">
     <div class="title-box d-flex align-items-center justify-content-between pl-4 pr-4 pt-4">
       <h2>주문내용</h2>
@@ -40,7 +52,7 @@
       <p>수량</p>
     </div>
   </div>
-  <div class={$isAdmin ? "side-content-admin aside-box simplebar mt-auto" : "side-content aside-box simplebar mt-auto"}>
+  <div class={$isAdmin ? isMobile ? "side-content-admin-m aside-box simplebar mt-auto" : "side-content-admin aside-box simplebar mt-auto" : isMobile ? "side-content-m aside-box simplebar mt-auto" : "side-content aside-box simplebar mt-auto"}>
     <!-- orderList start-->
       {#if $isAdmin}
         <OrderResultList />

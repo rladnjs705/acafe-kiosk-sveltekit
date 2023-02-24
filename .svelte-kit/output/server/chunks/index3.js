@@ -2,7 +2,7 @@ import { B as BROWSER, d as derived, w as writable } from "./index.js";
 import axios from "axios";
 const browser = BROWSER;
 const ALL = 0;
-const ADMIN = "admin";
+const ADMIN = "ADMIN";
 const ADD_MODE = "add_mode";
 const EDIT_MODE = "edit_mode";
 function setModalActiveItem() {
@@ -20,9 +20,9 @@ function setItemFormValue() {
   const initValues = {
     itemId: "",
     itemName: "",
-    categoryId: 0,
+    categoryId: "",
     itemPrice: 0,
-    itemImage: ""
+    itemImage: "http://localhost:3000/images/noImage.jpg"
   };
   const { subscribe, set } = writable({ ...initValues });
   const resetForm = () => set({ ...initValues });
@@ -148,6 +148,82 @@ function setIsAdmin() {
   const checkRole = derived(auth, ($auth) => $auth.role === ADMIN ? true : false);
   return checkRole;
 }
+function setOrders() {
+  const initValues = {
+    userId: 0,
+    orderPriceSum: 0,
+    orderCount: 0,
+    orderItems: []
+  };
+  const { subscribe, update, set } = writable({ ...initValues });
+  const resetOrder = () => set({ ...initValues });
+  const incrementOrder = (getOrder, auth2) => {
+    update(
+      (datas) => {
+        let orderPriceSum = datas.orderPriceSum;
+        let orderCount = datas.orderCount;
+        let orderItems = datas.orderItems;
+        let userId = auth2._id;
+        const duplicateCheckOrderItem = orderItems.find((item) => item.itemId === getOrder.itemId);
+        if (duplicateCheckOrderItem) {
+          orderItems = orderItems.map((item) => {
+            if (item.itemId === getOrder.itemId) {
+              item.itemPriceSum = item.itemPriceSum + getOrder.itemPrice;
+              item.itemCount = item.itemCount + 1;
+            }
+            return item;
+          });
+        } else {
+          const newOrder = {
+            userId: auth2._id,
+            itemId: getOrder.itemId,
+            itemName: getOrder.itemName,
+            itemPrice: getOrder.itemPrice,
+            itemPriceSum: getOrder.itemPrice,
+            itemCount: 1
+          };
+          orderItems = [...orderItems, newOrder];
+        }
+        orderPriceSum = orderPriceSum + getOrder.itemPrice;
+        orderCount = orderCount + 1;
+        datas.orderPriceSum = orderPriceSum;
+        datas.orderCount = orderCount;
+        datas.orderItems = orderItems;
+        datas.userId = userId;
+        return datas;
+      }
+    );
+  };
+  const decrementOrder = (getOrder) => {
+    update(
+      (datas) => {
+        let orderPriceSum = datas.orderPriceSum;
+        let orderCount = datas.orderCount;
+        let orderItems = datas.orderItems;
+        orderItems = orderItems.map((item) => {
+          if (item.itemId === getOrder.itemId) {
+            item.itemPriceSum = item.itemPriceSum - getOrder.itemPrice;
+            item.itemCount = item.itemCount - 1;
+          }
+          return item;
+        }).filter((item) => item.itemCount !== 0);
+        console.log(orderCount);
+        orderPriceSum = orderPriceSum - getOrder.itemPrice;
+        orderCount = orderCount - 1;
+        datas.orderPriceSum = orderPriceSum;
+        datas.orderCount = orderCount;
+        datas.orderItems = orderItems;
+        return datas;
+      }
+    );
+  };
+  return {
+    subscribe,
+    resetOrder,
+    incrementOrder,
+    decrementOrder
+  };
+}
 function setCategoryList() {
   const { subscribe, update, set } = writable();
   const getCategoryList = async () => {
@@ -192,6 +268,7 @@ function setItemList() {
       }
       const response = await axios.get("/api/user/items", { params });
       set(response.data.data);
+      itemMainLoading.set(false);
     } catch (error) {
       console.log(error);
     }
@@ -200,6 +277,16 @@ function setItemList() {
     subscribe,
     getItemList,
     update
+  };
+}
+function setOrderErrors() {
+  const { subscribe, update, set } = writable();
+  const resetErrors = () => set();
+  return {
+    update,
+    resetErrors,
+    subscribe,
+    set
   };
 }
 const modalActiveCategory = writable(false);
@@ -213,6 +300,8 @@ const itemSearch = writable("");
 const authToken = setAuthToken();
 const auth = setAuth();
 const isAdmin = setIsAdmin();
+const orders = setOrders();
+const orderErrors = setOrderErrors();
 const itemMainLoading = writable(false);
 const itemPageLoading = writable(false);
 const categoryList = setCategoryList();
@@ -220,17 +309,22 @@ const itemList = setItemList();
 export {
   ALL as A,
   EDIT_MODE as E,
-  itemSearch as a,
-  itemPage as b,
+  itemCategorySelected as a,
+  isAdmin as b,
   categoryList as c,
-  isAdmin as d,
-  itemFormValue as e,
-  itemList as f,
-  itemPageLock as g,
-  itemFormMode as h,
-  itemCategorySelected as i,
-  modalActiveItem as j,
-  ADD_MODE as k,
-  auth as l,
-  modalActiveCategory as m
+  itemSearch as d,
+  itemPage as e,
+  auth as f,
+  itemFormValue as g,
+  itemList as h,
+  itemMainLoading as i,
+  itemPageLock as j,
+  itemFormMode as k,
+  modalActiveItem as l,
+  modalActiveCategory as m,
+  ADD_MODE as n,
+  orders as o,
+  orderErrors as p,
+  authToken as q,
+  ADMIN as r
 };

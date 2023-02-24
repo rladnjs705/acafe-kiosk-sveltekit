@@ -4,6 +4,7 @@
   import { extractErrors, orderValidateSchema } from '$utils/validates';
   import { Notyf } from 'notyf';
   import 'notyf/notyf.min.css';
+  import Swal from 'sweetalert2';
   const notyf = new Notyf({
     duration: 3000,
     position: {
@@ -31,7 +32,11 @@
       const response = await axios.post("/api/user/order/create", $orders);
       if(response.status == 200){
         orders.resetOrder();
-        notyf.success(`주문이 완료 되었습니다.`)
+        notyf.success(`주문이 완료 되었습니다.`);
+        Swal.fire({
+          icon: 'success',
+          text: "대기번호 : " + response.data.data.order.orderNumber
+        });
         orderStream.getOrderList();
       }
     } catch (error) {

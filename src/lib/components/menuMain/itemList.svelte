@@ -41,7 +41,7 @@
   async function getItemList(page:number){
     let params = {
         page: page,
-        size: 10,
+        size: 15,
         itemName: $itemSearch,
         categoryId: $itemCategorySelected,
       }

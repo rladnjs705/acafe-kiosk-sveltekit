@@ -111,6 +111,11 @@ body {
   width: calc(100vw - 350px);
   padding: 0; }
 
+/** mobile main start **/
+.content-m {
+  width: calc(100vw - 250px);
+  padding: 0; }
+
 .main-header-section {
   height: 100px;
   background-color: #ffffff;
