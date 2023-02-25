@@ -299,7 +299,7 @@ body {
 } // end .main-content-section
 
 .main-content-section-m {
-  height: calc(45vh);
+  height: 41vh;
   overflow-y: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -431,7 +431,7 @@ aside {
   }
 
   .side-content-m {
-    height: 30vh;
+    height: 29vh;
     @extend %side-content;
   }
 
@@ -441,7 +441,7 @@ aside {
   }
 
   .side-content-admin-m {
-    height: 30vh;
+    height: 29vh;
     @extend %side-content;
   }
   

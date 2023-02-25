@@ -1,6 +1,5 @@
 <script lang="ts">
   import axios from "axios";
-  import { onDestroy } from "svelte";
   let orderList:any[];
 
   getOrders();
