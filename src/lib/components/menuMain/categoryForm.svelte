@@ -133,7 +133,7 @@
 </script>
 <Modal bind:modalActive={$modalActiveCategory}>
   <!-- slot modal-header start -->
-  <h4 slot="modal-title">메뉴 추가</h4>
+  <h4 slot="modal-title">카테고리 추가</h4>
   <!-- slot modal-header end -->
 
   <!-- slot modal-body start -->
