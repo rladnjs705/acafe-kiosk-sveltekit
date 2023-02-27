@@ -1,19 +1,21 @@
 {
-	"/": [
-		"src/routes/+layout.js",
-		"src/routes/+layout.js"
+	"/(app)": [
+		"src/routes/(app)/+layout.js",
+		"src/routes/(app)/+layout.js"
 	],
-	"/menu": [
-		"src/routes/menu/+page.ts",
-		"src/routes/+layout.js"
+	"/": [],
+	"/(app)/menu": [
+		"src/routes/(app)/menu/+page.ts",
+		"src/routes/(app)/+layout.js"
 	],
-	"/users": [
-		"src/routes/+layout.js"
+	"/privacy": [],
+	"/(app)/users": [
+		"src/routes/(app)/+layout.js"
 	],
-	"/user/join": [
-		"src/routes/+layout.js"
+	"/(app)/user/join": [
+		"src/routes/(app)/+layout.js"
 	],
-	"/user/login": [
-		"src/routes/+layout.js"
+	"/(app)/user/login": [
+		"src/routes/(app)/+layout.js"
 	]
 }
