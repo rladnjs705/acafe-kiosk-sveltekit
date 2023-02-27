@@ -2,13 +2,25 @@ import { c as create_ssr_component, d as add_attribute, e as escape, v as valida
 import "../../../../chunks/validates.js";
 import "sweetalert2";
 const RegisterForm = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let formValues = { email: "", pwd: "", pwdConfirm: "" };
+  let formValues = {
+    email: "",
+    pwd: "",
+    pwdConfirm: "",
+    userName: "",
+    nickName: ""
+  };
   let errors = {};
   return `
 <div class="${"row d-flex justify-content-center align-items-center content-auth"}"><div class="${"auth-box"}"><div class="${"card auth"}"><div class="${"card-header"}"><h4>회원가입</h4></div>
       <div class="${"card-body"}"><div class="${"mb-3"}"><label for="${"idTextInput"}" class="${"form-label"}">아이디</label>
           <input type="${"text"}" class="${["form-control", errors.email ? "inputError" : ""].join(" ").trim()}"${add_attribute("value", formValues.email, 0)}> 
           ${errors.email ? `<span class="${"invalid-feedback was-validated"}">${escape(errors.email)}</span>` : ``}</div>
+        <div class="${"mb-3"}"><label for="${"userName"}" class="${"form-label"}">이름</label>
+          <input type="${"text"}" class="${["form-control", errors.userName ? "inputError" : ""].join(" ").trim()}"${add_attribute("value", formValues.userName, 0)}> 
+          ${errors.userName ? `<span class="${"invalid-feedback was-validated"}">${escape(errors.userName)}</span>` : ``}</div>
+        <div class="${"mb-3"}"><label for="${"nickName"}" class="${"form-label"}">닉네임</label>
+          <input type="${"text"}" class="${["form-control", errors.nickName ? "inputError" : ""].join(" ").trim()}"${add_attribute("value", formValues.nickName, 0)}> 
+          ${errors.nickName ? `<span class="${"invalid-feedback was-validated"}">${escape(errors.nickName)}</span>` : ``}</div>
         <div class="${"mb-3"}"><label for="${"pwdTextInput"}" class="${"form-label"}">패스워드</label>
           <input type="${"password"}" class="${["form-control", errors.pwd ? "inputError" : ""].join(" ").trim()}"${add_attribute("value", formValues.pwd, 0)}> 
           ${errors.pwd ? `<span class="${"invalid-feedback was-validated"}">${escape(errors.pwd)}</span>` : ``}</div>            

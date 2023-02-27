@@ -78,7 +78,7 @@
           {/if}          
         </div>
         <div class="mb-3">
-          <label for="birthDate" class="form-label">닉네임</label>
+          <label for="nickName" class="form-label">닉네임</label>
           <input type="text" class="form-control" bind:value={formValues.nickName} class:inputError={errors.nickName}> 
           {#if errors.nickName}
             <span class="invalid-feedback was-validated">{errors.nickName}</span>

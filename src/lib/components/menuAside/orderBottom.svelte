@@ -6,7 +6,7 @@
   import 'notyf/notyf.min.css';
   import Swal from 'sweetalert2';
   const notyf = new Notyf({
-    duration: 3000,
+    duration: 5000,
     position: {
       x: 'right',
       y: 'top',
@@ -36,9 +36,13 @@
         Swal.fire({
           icon: 'success',
           text: "대기번호 : " + response.data.data.order.orderNumber,
-          timer: 3000, // 3초 후 자동으로 닫힘
+          timer: 15000, // 15초 후 자동으로 닫힘
           timerProgressBar: true, // 타이머 진행 바 보이기
-          showConfirmButton: false // 확인 버튼 숨기기
+//          showConfirmButton: false // 확인 버튼 숨기기
+          customClass: {
+              title: 'order-swal-title',
+              htmlContainer: 'order-swal-html-container',
+            },
         });
         orderStream.getOrderList();
       }

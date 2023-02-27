@@ -107,7 +107,9 @@ function setAuth() {
   let initValues = {
     _id: "",
     email: "",
-    role: ""
+    role: "",
+    nickName: "",
+    userName: ""
   };
   let data = {
     params: {
@@ -121,11 +123,13 @@ function setAuth() {
       const isLoginToken = browser ? window.localStorage.getItem("token") ?? defaultValue : defaultValue;
       data.params.authToken = isLoginToken;
       const response = await axios.get("/api/user/login/info", data);
-      const userInfo = response.data.data;
+      const userInfo = response.data.data.user;
       const _id = userInfo.id;
       const email = userInfo.email;
       const role = userInfo.role;
-      set({ _id, email, role });
+      const nickName = userInfo.nickName;
+      const userName = userInfo.userName;
+      set({ _id, email, role, nickName, userName });
       return;
     } catch (error) {
       authToken.removeAuthToken();
@@ -243,7 +247,7 @@ function setCategoryList() {
 function setItemList() {
   let params = {
     page: 0,
-    size: 10,
+    size: 15,
     itemName: "",
     categoryId: 0
   };

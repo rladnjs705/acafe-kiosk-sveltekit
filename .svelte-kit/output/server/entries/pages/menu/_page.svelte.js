@@ -282,7 +282,11 @@ const Main = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       ${validate_component(CategoryForm, "CategoryForm").$$render($$result, {}, {}, {})}
     </div>
 
-    <div class="${"main-content-section simplebar"}">${validate_component(ItemList, "ItemList").$$render($$result, {}, {}, {})}
+    <div${add_attribute(
+    "class",
+    "main-content-section simplebar",
+    0
+  )}>${validate_component(ItemList, "ItemList").$$render($$result, {}, {}, {})}
       ${validate_component(ItemForm, "ItemForm").$$render($$result, {}, {}, {})}
     </div></div>
 </main>`;
@@ -311,7 +315,7 @@ const OrderBottom = create_ssr_component(($$result, $$props, $$bindings, slots) 
   $$unsubscribe_orders = subscribe(orders, (value) => $orders = value);
   $$unsubscribe_orderErrors = subscribe(orderErrors, (value) => $orderErrors = value);
   new Notyf({
-    duration: 3e3,
+    duration: 5e3,
     position: { x: "right", y: "top" }
   });
   let errors;
@@ -334,10 +338,9 @@ const OrderResultList = create_ssr_component(($$result, $$props, $$bindings, slo
   async function getOrders() {
     await axios.get("/api/admin/orders/subscribe").then((data) => {
       orderList = data.data;
-      setTimeout(getOrders, 2e3);
+      getOrders();
     }).catch((error) => {
       console.log(error);
-      setTimeout(getOrders, 5e3);
     });
   }
   $$result.css.add(css);
@@ -345,7 +348,7 @@ const OrderResultList = create_ssr_component(($$result, $$props, $$bindings, slo
 <ul>
   ${orderList ? `${each(orderList, (order) => {
     return `<li class="${"d-flex flex-column p-4 order-result-list "}"><div class="${"d-flex justify-content-between "}"><ul class="${"order-inner-list"}"><li class="${"d-flex justify-content-between date"}"><p class="${["svelte-1a1tfha", !order.orderState ? "orderChecked" : ""].join(" ").trim()}">${escape(order.createDate)}</p>
-              <p class="${["svelte-1a1tfha", !order.orderState ? "orderChecked" : ""].join(" ").trim()}">${escape(order.orderNumber)}</p>
+              <p class="${["svelte-1a1tfha", !order.orderState ? "orderChecked" : ""].join(" ").trim()}">번호:${escape(order.orderNumber)}</p>
               
               <p class="${"btnOrderCheck svelte-1a1tfha"}">확인</p></li>        
             ${order.item ? `${each(order.item, (item) => {
@@ -374,11 +377,11 @@ const Aside = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_authToken();
   $$unsubscribe_isAdmin();
   $$unsubscribe_auth();
-  return `<aside>
+  return `<aside${add_attribute("style", "", 0)}>
   <div class="${"side-header"}"><div class="${"title-box d-flex align-items-center justify-content-between pl-4 pr-4 pt-4"}"><h2>주문내용</h2>
       <span>${$authToken ? `<a href="${"#null"}"><i class="${"bx bx-log-out"}"></i></a>
           ${$isAdmin ? `<a href="${"/users"}"><i class="${"bx bxs-cog"}"></i></a>` : ``}` : `<a href="${"#null"}"><i class="${"bx bx-log-in"}"></i></a>`}</span></div>
-    <div class="${"info-box d-flex justify-content-between align-items-center pl-4 pr-4"}">${$authToken ? `<p>${escape($auth.email)} 로그인중</p>` : `<p>상품 이름</p>`}
+    <div class="${"info-box d-flex justify-content-between align-items-center pl-4 pr-4"}">${$authToken ? `<p>${escape($auth.nickName)} 로그인중</p>` : `<p>상품 이름</p>`}
       <p>수량</p></div></div>
   <div${add_attribute(
     "class",
@@ -415,7 +418,8 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     }
   }
   $$unsubscribe_authToken();
-  return `${function(__value) {
+  return `${$$result.head += `<!-- HEAD_svelte-wret2p_START -->${`<meta name="${"viewport"}" content="${"width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0"}">`}${$$result.title = `<title>아카페</title>`, ""}<!-- HEAD_svelte-wret2p_END -->`, ""}
+${function(__value) {
     if (is_promise(__value)) {
       __value.then(null, noop);
       return ``;
