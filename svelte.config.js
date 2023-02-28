@@ -16,6 +16,7 @@ const config = {
 		}),
 		alias: {
 			$lib: './src/lib',
+			$mcomponents: './src/lib/mobile/components',
 			$components: './src/lib/components',
 			$images:'./src/lib/images',
 			$styles: './src/lib/styles',

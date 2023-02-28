@@ -7,6 +7,12 @@
 			"$lib/*": [
 				"../src/lib/*"
 			],
+			"$mcomponents": [
+				"../src/lib/mobile/components"
+			],
+			"$mcomponents/*": [
+				"../src/lib/mobile/components/*"
+			],
 			"$components": [
 				"../src/lib/components"
 			],
