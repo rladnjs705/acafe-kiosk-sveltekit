@@ -13,7 +13,7 @@ export default defineConfig({
 		},
 		proxy: {
 			'/api': {
-				target : 'http://java:8080',
+				target : 'http://acafe-springboot:8080',
 				changeOrigin: true,
 				rewrite: (path) => path.replace(/^\/api/, ''),
 				secure: false,
