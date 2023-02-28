@@ -2,7 +2,18 @@
   import axios from "axios";
   let orderList:any[];
 
-  getOrders();
+  getOrdersStream();
+
+  async function getOrdersStream() {
+    await axios.get("/api/admin/orders/stream")
+    .then(data => {
+      orderList = data.data.data.list;
+      getOrders();
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
   async function getOrders() {
     await axios.get("/api/admin/orders/subscribe")
