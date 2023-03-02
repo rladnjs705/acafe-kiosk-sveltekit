@@ -3,6 +3,18 @@
   import Item from './item.svelte';
   import { modalActiveItem, itemList, itemPage, itemPageLock, itemFormMode, itemCategorySelected, itemSearch, isAdmin, itemMainLoading } from '$stores';
   import axios from 'axios';
+  import { onMount } from "svelte";
+
+  let isMobile = false;
+
+  onMount(() => {
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+  })
+
+  function checkMobile() {
+    isMobile = window.innerWidth < 600;
+  }
 
   let component:any;
   let elementScroll:any;
@@ -66,7 +78,7 @@
     itemMainLoading.set(false);
   }
 </script>
-
+{#if !isMobile}
 <!-- itemList start -->
 <div class="row row-cols-4 g-4 pl-3 pr-3 pt-2 pb-4 list-bg-shadow" bind:this={component}>
   {#if $isAdmin}
@@ -92,3 +104,30 @@
   {/if}
 </div>
 <!-- itemList end -->
+  {:else}
+  <!-- itemList start -->
+  <div class="row row-cols-3 g-2 pl-1 pr-3 pt-2 pb-4 list-bg-shadow" bind:this={component}>
+    {#if $isAdmin}
+    <div class="col mb-2">
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <span class="btn-add-modal-show" on:click={onOpenModalItemForm} >
+        <div class="card menu-add-box h-100 d-flex justify-content-center align-items-center">
+          <i class='bx bx-plus bx-md' ></i>
+        </div>
+      </span>
+    </div>        
+    {/if}                
+    {#if data}
+      {#each data.list as item (item.itemId)}
+        <Item item={item} />
+      {/each}
+      {:else}
+        {#if $itemMainLoading}
+        <!-- Loading-box start-->
+          <ItemLoading />
+        {/if}
+        <!-- Loading-box end-->
+    {/if}
+  </div>
+  <!-- itemList end -->
+{/if}
