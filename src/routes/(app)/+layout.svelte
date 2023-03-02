@@ -18,9 +18,9 @@
 </script>
 <svelte:head>
 	{#if isMobile}
-		<meta name="viewport" content="width=device-width, maximum-scale=5.0, minimum-scale=0.1, user-scalable=yes,initial-scale=0.7" />
+		<meta name="viewport" content="width=device-width, maximum-scale=5.0, minimum-scale=0.1, user-scalable=no,initial-scale=0.7" />
 		{:else}
-		<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=yes,initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1, user-scalable=no,initial-scale=1.0" />
 	{/if}
   	<title>아카페</title>
 </svelte:head>
