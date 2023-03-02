@@ -8,23 +8,6 @@
 		"src/routes/(app)/menu/+page.ts",
 		"src/routes/(app)/+layout.js"
 	],
-	"/mobile": [
-		"src/routes/mobile/+layout.js",
-		"src/routes/mobile/+layout.js"
-	],
-	"/mobile/menu": [
-		"src/routes/mobile/menu/+page.ts",
-		"src/routes/mobile/+layout.js"
-	],
-	"/mobile/users": [
-		"src/routes/mobile/+layout.js"
-	],
-	"/mobile/user/join": [
-		"src/routes/mobile/+layout.js"
-	],
-	"/mobile/user/login": [
-		"src/routes/mobile/+layout.js"
-	],
 	"/privacy": [],
 	"/(app)/users": [
 		"src/routes/(app)/+layout.js"
