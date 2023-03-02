@@ -2,7 +2,7 @@
   import OrderList from './orderList.svelte';
   import OrderBottom from './orderBottom.svelte';
   import OrderResultList from './orderResultList.svelte';
-  import { authToken, auth, isAdmin } from '$stores';
+  import { authToken, auth, isAdmin, orders } from '$stores';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
 
@@ -20,6 +20,7 @@
   const onLogout = async () => {
     try {
       authToken.removeAuthToken();
+      orders.resetOrder();
       goto("/")
     } catch (error) {
       console.log(error);
