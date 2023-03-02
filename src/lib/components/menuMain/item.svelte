@@ -51,7 +51,7 @@
     <div class="card ct-shadow-sm menu-item-box" on:click={onClickMenu} >
       <div class="img-box" style="background-image: url({item.itemImage});"></div>
       <div class="card-body">
-        <h5>{item.itemName}</h5>
+        <h5 class="card-title">{item.itemName}</h5>
         <!-- <p class="card-text">{item.itemPrice} 원</p> -->
       </div>
     </div>

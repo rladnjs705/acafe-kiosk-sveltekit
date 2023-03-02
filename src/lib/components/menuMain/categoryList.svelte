@@ -96,6 +96,5 @@
       padding: 0 10px;
       font-size: 1rem;
       text-decoration: none;
-      color: #222222;
   }
 </style>

@@ -13,7 +13,7 @@
   })
 
   function checkMobile() {
-    isMobile = window.innerWidth < 600;
+    isMobile = window.innerWidth <= 800;
   }
 
   let component:any;
@@ -80,7 +80,7 @@
 </script>
 {#if !isMobile}
 <!-- itemList start -->
-<div class="row row-cols-4 g-4 pl-3 pr-3 pt-2 pb-4 list-bg-shadow" bind:this={component}>
+<div class="row row-cols-4 g-4 list-bg-shadow" bind:this={component}>
   {#if $isAdmin}
   <div class="col mb-2">
     <!-- svelte-ignore a11y-click-events-have-key-events -->

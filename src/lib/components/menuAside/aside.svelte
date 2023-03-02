@@ -34,11 +34,7 @@
       {#if isMobile}
         <h4>주문내용</h4>
         <div class="info-box d-flex justify-content-between align-items-center pl-4 pr-4">
-          {#if $authToken}
-            <h6>{$auth.nickName} 로그인중</h6>
-          {:else}
-            <p>상품 이름</p>
-          {/if}
+          <h6>{$auth.nickName} 로그인중</h6>
         </div>
         {:else}
         <h2>주문내용</h2>
@@ -57,11 +53,9 @@
     {#if !isMobile}
     <div class="info-box d-flex justify-content-between align-items-center pl-4 pr-4">
       {#if $authToken}
-        <p>{$auth.nickName} 로그인중</p>
-      {:else}
         <p>상품 이름</p>
+        <p>{$auth.nickName} 로그인중</p>
       {/if}
-      <p>수량</p>
     </div>
     {/if}
   </div>
