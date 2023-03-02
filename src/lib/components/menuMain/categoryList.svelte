@@ -27,7 +27,7 @@
     };
 </script>
 {#if !isMobile}
-<div class="header-box-bottom">
+<div class="header-box-bottom mobile">
   <ul class="d-flex justify-content-start">
     <li>
       {#if $itemCategorySelected === ALL}
