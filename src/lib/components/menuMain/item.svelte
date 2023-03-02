@@ -51,7 +51,7 @@
     <div class="card ct-shadow-sm menu-item-box" on:click={onClickMenu} >
       <div class="img-box" style="background-image: url({item.itemImage});"></div>
       <div class="card-body">
-        <h5 class="card-title">{item.itemName}</h5>
+        <h6 class="card-title">{item.itemName}</h6>
         <!-- <p class="card-text">{item.itemPrice} 원</p> -->
       </div>
     </div>
@@ -62,7 +62,7 @@
     <div class="card ct-shadow-sm menu-item-box" on:click={onClickMenu} >
       <div class="img-box" style="background-image: url({item.itemImage});"></div>
       <div class="card-body">
-        <h6>{item.itemName}</h6>
+        <h6 class="card-title">{item.itemName}</h6>
         <!-- <p class="card-text">{item.itemPrice} 원</p> -->
       </div>
     </div>
