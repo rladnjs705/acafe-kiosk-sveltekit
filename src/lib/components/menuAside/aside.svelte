@@ -28,10 +28,21 @@
 
   const goLogin = () => goto('/user/login');
 </script>
-<aside style={isMobile ? "width:100%;height:100%" : ""}> <!-- aside start-->
-  <div class="side-header">
+<aside style={isMobile ? "width:100%;height:50vh" : ""}> <!-- aside start-->
+  <div class="side-header" style={isMobile ? "height:8vh" : ""}>
     <div class="title-box d-flex align-items-center justify-content-between pl-4 pr-4 pt-4">
-      <h2>주문내용</h2>
+      {#if isMobile}
+        <h4>주문내용</h4>
+        <div class="info-box d-flex justify-content-between align-items-center pl-4 pr-4">
+          {#if $authToken}
+            <h6>{$auth.nickName} 로그인중</h6>
+          {:else}
+            <p>상품 이름</p>
+          {/if}
+        </div>
+        {:else}
+        <h2>주문내용</h2>
+      {/if}
       <span>
         {#if $authToken}
           <a href="#null" on:click={onLogout} ><i class='bx bx-log-out'></i></a>
@@ -43,6 +54,7 @@
         {/if}
       </span>
     </div>
+    {#if !isMobile}
     <div class="info-box d-flex justify-content-between align-items-center pl-4 pr-4">
       {#if $authToken}
         <p>{$auth.nickName} 로그인중</p>
@@ -51,6 +63,7 @@
       {/if}
       <p>수량</p>
     </div>
+    {/if}
   </div>
   <div class={$isAdmin ? isMobile ? "side-content-admin-m aside-box simplebar mt-auto" : "side-content-admin aside-box simplebar mt-auto" : isMobile ? "side-content-m aside-box simplebar mt-auto" : "side-content aside-box simplebar mt-auto"}>
     <!-- orderList start-->

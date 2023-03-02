@@ -32,14 +32,12 @@
   	<title>아카페</title>
 </svelte:head>
 
-<body>
-	{#if isMobile}
-		<div class="app">
-			<slot />
-		</div>
-		{:else}
-		<div class="app d-flex container-fluid ">
-			<slot />
-		</div>
-	{/if}
-</body>
+{#if isMobile}
+	<div class="app">
+		<slot />
+	</div>
+	{:else}
+	<div class="app d-flex container-fluid ">
+		<slot />
+	</div>
+{/if}

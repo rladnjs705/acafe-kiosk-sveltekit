@@ -94,7 +94,7 @@
   .main-header-section .mobile ul li a {
       height: 50px;
       padding: 0 10px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       text-decoration: none;
       color: #222222;
   }

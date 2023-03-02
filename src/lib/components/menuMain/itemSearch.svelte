@@ -45,7 +45,7 @@
   .mobile-header-box-top {
       height: 50px;
       padding-top: 20px;
-      padding-left: 30px;
+      padding-left: 15px;
       /* padding-right: 30px; */
       padding-bottom: 0;
       align-items: center;

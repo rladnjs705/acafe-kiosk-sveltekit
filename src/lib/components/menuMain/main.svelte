@@ -18,7 +18,7 @@
 	}
 </script>
 
-<main><!-- main start -->
+<main style={isMobile ? "height:50vh" : ""}><!-- main start -->
   <div class={isMobile ? "content-m d-flex flex-column container-fluid" : "content d-flex flex-column container-fluid"}>
     <div class="main-header-section d-flex flex-column ">
       <ItemSearch />
