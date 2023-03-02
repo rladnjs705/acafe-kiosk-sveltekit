@@ -20,13 +20,13 @@
 
 <main style={isMobile ? "height:50vh" : ""}><!-- main start -->
   <div class={isMobile ? "content-m d-flex flex-column container-fluid" : "content d-flex flex-column container-fluid"}>
-    <div class="main-header-section d-flex flex-column ">
+    <div class="main-header-section d-flex flex-column" style={isMobile ? "height:14vh" : ""}>
       <ItemSearch />
       <CategoryList/>
       <CategoryForm/>
     </div><!-- main-header-section -->
 
-    <div class={isMobile ? "main-content-section-m simplebar" : "main-content-section simplebar"}>
+    <div class={isMobile ? "main-content-section-m simplebar" : "main-content-section simplebar"} style={isMobile ? "height:36vh" : ""}>
       <ItemList />
       <ItemForm />
     </div><!-- end main-content-section -->

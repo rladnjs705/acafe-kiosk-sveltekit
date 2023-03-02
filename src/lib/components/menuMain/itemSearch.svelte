@@ -43,7 +43,7 @@
 
 <style lang="scss">
   .mobile-header-box-top {
-      height: 50px;
+      height: 7vh;
       padding-top: 20px;
       padding-left: 15px;
       /* padding-right: 30px; */

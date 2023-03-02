@@ -91,8 +91,8 @@
 {/if}
 
 <style lang="scss">
-  .main-header-section .mobile ul li a {
-      height: 50px;
+  .mobile ul li a {
+      height: 7vh;
       padding: 0 10px;
       font-size: 1rem;
       text-decoration: none;
