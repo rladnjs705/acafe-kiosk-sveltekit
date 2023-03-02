@@ -673,6 +673,58 @@ ul.category-list {
   font-size: 2.3rem !important; /* Change to desired font size */
 }
 
+@media (max-width: 600px) {
+  .main-header-section {
+    height: 100px;
+    background-color: $main-color-1; 
+    border-bottom: 1px solid $aside-line-color;
+    
+    .header-box-top {
+      height: 50px;
+      padding-top: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-bottom: 0;
+      align-items: center;
+      h1 {
+        font-size: 1.8rem;
+        margin-right: auto;
+        white-space:nowrap;
+      }    
+      .form-control {
+        margin-left: 10px;
+      }
+    }
+    .header-box-bottom {
+      // height: 50px;
+      
+      ul {
+        padding: 0 10px;
+        li {
+          
+          a {
+            height: 7vh;
+            padding: 0 10px;
+            font-size: 1rem;
+            text-decoration: none;
+            color: $main-font-color
+          }
+          a.selected {
+            color: $btn-color-1;
+            border-bottom: $btn-color-1 solid 2px;  
+          }
+          a.disableClick {
+            color: #bbbbbb;
+          }        
+          a.add {
+            color: $btn-color-1;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 800px) {
 
   .modal-bg {
@@ -751,7 +803,7 @@ ul.category-list {
         a {
           height: 50px;
           padding: 0 20px;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           text-decoration: none;
           color: $main-font-color
         }

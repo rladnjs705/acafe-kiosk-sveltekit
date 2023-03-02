@@ -92,9 +92,9 @@
 
 <style lang="scss">
   .mobile ul li a {
-      height: 7vh;
-      padding: 0 10px;
-      font-size: 1rem;
+      height: 7vh !important;
+      padding: 0 10px !important;
+      font-size: 1rem !important;
       text-decoration: none;
   }
 </style>
