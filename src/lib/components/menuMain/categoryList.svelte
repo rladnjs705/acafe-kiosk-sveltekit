@@ -1,7 +1,6 @@
 <script lang="ts">
   import { modalActiveCategory, categoryList, itemCategorySelected, itemList, itemPageLock, isAdmin, itemMainLoading } from '$stores';
   import { ALL } from '$utils/constans';
-    import { onDestroy } from 'svelte';
 
   $: data = $categoryList; 
 
@@ -14,10 +13,6 @@
         itemMainLoading.set(false);
       }
     };
-
-  onDestroy(() => {
-    itemCategorySelected.set(ALL);
-  })
 </script>
 <div class="header-box-bottom">
   <ul class="d-flex justify-content-start">
