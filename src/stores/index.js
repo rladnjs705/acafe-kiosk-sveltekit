@@ -82,7 +82,7 @@ function setItemFormMode() {
 }
 
 function setItemCategorySelected() {
-  const { subscribe, set } = writable(ALL);
+  const { subscribe, update, set } = writable(ALL);
 
   const selectCategory = (_id) => {
     set(_id)
@@ -90,9 +90,15 @@ function setItemCategorySelected() {
     itemMainLoading.set(true);
   }
 
+  const resetCategory = () => {
+    update(data => {return ALL;})
+  }
+
   return {
     subscribe,
     selectCategory,
+    set,
+    resetCategory,
   }
 }
 

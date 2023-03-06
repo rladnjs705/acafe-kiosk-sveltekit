@@ -22,7 +22,7 @@
     try {
       authToken.removeAuthToken();
       orders.resetOrder();
-      itemCategorySelected.set(ALL);
+      itemCategorySelected.resetCategory();
       goto("/")
     } catch (error) {
       console.log(error);
