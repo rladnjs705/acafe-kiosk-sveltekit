@@ -47,7 +47,7 @@
   <!-- order one start -->
   {#if orderList}
     {#each orderList as order}
-      <li class="d-flex  flex-column p-3 order-result-list ">
+      <li class="d-flex  flex-column p-4 order-result-list ">
         <div class="d-flex justify-content-between ">
           <ul class="order-inner-list">
             <li class="d-flex justify-content-between date">
