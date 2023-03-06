@@ -5,6 +5,7 @@
   import { ADD_MODE, EDIT_MODE } from "$utils/constans";
   import Swal from 'sweetalert2';
   import axios from 'axios';
+    import { onDestroy } from "svelte";
 
   let errors:any = {};
 
@@ -15,6 +16,10 @@
     };
 
     if($itemFormMode === EDIT_MODE) errors = {};
+
+    if(!$modalActiveItem){
+      clearItemForm();
+    }
   }
 
   const onAddItem = async () => {
@@ -145,20 +150,18 @@
       }
 
       const formData = new FormData();
-      const upload = formData.append('image', files[0]);
-      axios.post('https://api.imgbb.com/1/upload?key=76f5daf6e6842d92f95bf1f84b2111d3', formData,{
+      const upload = formData.append('file', files[0]);
+      const response =  await axios.post('/api/admin/upload/files', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      .then(response => {
-        console.log(response.data.data.display_url);
-        $itemFormValue.itemImage = response.data.data.display_url;
-        return upload;
-      })
-      .catch(error => {
-        console.log(error);
+           'Content-Type': 'multipart/form-data'
+         }
       });
+      console.log(response);
+      if(response.status == 200){
+        $itemFormValue.itemImage = response.data.data.link;
+        return upload;
+      }
+
     } catch (error) {
       errors = extractErrors(error);
     }

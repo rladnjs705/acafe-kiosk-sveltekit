@@ -17,6 +17,12 @@
   
   categoryList.getCategoryList();
   $: categories = $categoryList;
+  
+  $: {
+    if(!$modalActiveCategory){
+      clearCategoryForm();
+    }
+  }
 
   let addValues = {
     categoryName: ''
