@@ -5,7 +5,6 @@
   import { ADD_MODE, EDIT_MODE } from "$utils/constans";
   import Swal from 'sweetalert2';
   import axios from 'axios';
-    import { onDestroy } from "svelte";
 
   let errors:any = {};
 
