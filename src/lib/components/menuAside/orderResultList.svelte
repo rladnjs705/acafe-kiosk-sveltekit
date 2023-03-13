@@ -58,21 +58,32 @@
             </li>        
             {#if order.item}
               {#each order.item as item}
-                <li class="d-flex justify-content-between ">
-                  <p class:orderChecked={!order.orderState}>{item.itemName}</p>
-                  <p class:orderChecked={!order.orderState}>{item.itemCount}</p>
+                <li class="d-flex justify-content-between mt-2">
+                  <p class:orderChecked={!order.orderState}>
+                    {#if item.coffeeType === '100'}
+                      ( <span style="color: red;">HOT</span> )
+                    {:else if item.coffeeType === '200'}
+                      ( <span style="color: blue;">ICE</span> )
+                    {/if}
+                    {item.itemName}
+                  </p>
+                  <p class:orderChecked={!order.orderState}><span style="font-weight: 600;">{item.itemCount}</span></p>
                 </li>   
                 <li>
-                  {#if item.shot > 0}
-                    <p>- 샷 추가 : {item.shot}</p>
-                  {/if}
-                  {#if item.light === '100'}
-                    <p>- 농도 : 연하게</p>
-                  {:else if item.light === '200'}
-                    <p>- 농도 : 보통</p>
-                  {:else if item.light === '300'}
-                    <p>- 농도 : 진하게</p>
-                  {/if}
+                  <div class="mt-2">
+                    {#if item.shot > 0}
+                      <p>- 샷 추가 : <span style="font-weight: 600;">{item.shot}</span></p>
+                    {/if}
+                  </div>
+                  <div class="my-2 mb-3">
+                    {#if item.light === '100'}
+                      <p style="color: gray; font-weight: 500;">- 농도 : 연하게</p>
+                    {:else if item.light === '200'}
+                      <!-- <p>- 농도 : 보통</p> -->
+                    {:else if item.light === '300'}
+                      <p style="color: brown; font-weight: 500;">- 농도 : 진하게</p>
+                    {/if}
+                  </div>
                   <!-- <p>가격(개당: {item.itemPrice})</p> -->
                   <!-- <p>{item.itemPriceSum}</p> -->
                 </li>                   
