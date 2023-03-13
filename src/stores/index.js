@@ -220,15 +220,17 @@ function setOrders() {
         const duplicateCheckOrderItem = orderItems.find(item => item.itemId === getOrder.itemId);
         const shotCheckOrderItem = orderItems.find(item => item.shot === getOrder.shot);
         const lightCheckOrderItem = orderItems.find(item => item.light === getOrder.light);
+        const typeCheckOrderItem = orderItems.find(item => item.coffeType === getOrder.coffeType);
 
-        if(duplicateCheckOrderItem && shotCheckOrderItem && lightCheckOrderItem) {
+        if(duplicateCheckOrderItem && shotCheckOrderItem && lightCheckOrderItem && typeCheckOrderItem) {
           //선택된 item이 orderItems에 이미 있고, 샷추가, 농도가 같은경우
           orderItems = orderItems.map(item => {
-            if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light) {
+            if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light && item.coffeType === getOrder.coffeType) {
               item.itemPriceSum = item.itemPriceSum + getOrder.itemPrice;
               item.itemCount = item.itemCount + 1;
               item.shot = getOrder.shot;
               item.light = getOrder.light;
+              item.coffeType = getOrder.coffeType;
             } 
             return item;
           });
@@ -242,6 +244,7 @@ function setOrders() {
             itemPriceSum: getOrder.itemPrice,
             shot : getOrder.shot,
             light : getOrder.light,
+            coffeType : getOrder.coffeType,
             itemCount: 1,
           }
           orderItems = [...orderItems, newOrder];
@@ -254,8 +257,6 @@ function setOrders() {
         datas.orderCount = orderCount;
         datas.orderItems = orderItems;
         datas.userId = userId;
-
-        console.log(orderItems);
 
         return datas;
       }
@@ -277,8 +278,6 @@ function setOrders() {
           return item;
         })
         .filter(item => item.itemCount !== 0);
-
-        console.log(orderCount);
 
         orderPriceSum = orderPriceSum - getOrder.itemPrice;
         orderCount = orderCount - 1;
@@ -418,6 +417,7 @@ function setItemOption(){
     itemOrder: 0,
     shot:0,
     light:'200',
+    coffeType: '200',
     itemImage: 'http://localhost:3000/images/noImage.jpg',
   }
   
