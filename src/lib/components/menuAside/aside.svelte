@@ -20,7 +20,7 @@
 
   const onLogout = async () => {
     try {
-      authToken.removeAuthToken();
+      auth.resetAuth();
       orders.resetOrder();
       itemCategorySelected.resetCategory();
       goto("/")

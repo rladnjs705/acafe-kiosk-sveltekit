@@ -3,7 +3,6 @@
 	import '$lib/styles/boxicon/css/boxicons.min.css';
 	import '$lib/styles/main.scss';
     import { onMount } from 'svelte';
-	import debounce from 'lodash/debounce';
 
 	let isMobile = false;
 

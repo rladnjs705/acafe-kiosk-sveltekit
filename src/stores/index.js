@@ -24,6 +24,7 @@ function setItemFormValue() {
     itemName: '',
     categoryId: '',
     itemPrice: 0,
+    displayYn: 'Y',
     itemImage: 'http://localhost:3000/images/noImage.jpg',
   }
 
@@ -322,12 +323,13 @@ function setItemList () {
       page: 0,
       size: 15,
       itemName:'',
+      adminYn: "N",
       categoryId:0,
     }
-
+    
   const { subscribe, update, set } = writable();
 
-  const getItemList = async (pageNumber, name, categoryId) => {
+  const getItemList = async (pageNumber, name, categoryId, adminYn) => {
     try {
       if(name != '' && name != null){
         params.itemName = name;
@@ -347,6 +349,11 @@ function setItemList () {
       } else{
         params.categoryId = 0;
       }
+
+      if(adminYn != '' && adminYn != null){
+        params.adminYn = adminYn;
+      }
+
       const response = await axios.get("/api/user/items", {params});
       set(response.data.data);
       itemMainLoading.set(false);

@@ -8,7 +8,7 @@
   const onSelectCategory = (_id:any) => {
     if(!$itemMainLoading){
         itemCategorySelected.selectCategory(_id);
-        itemList.getItemList(0, '', _id);
+        itemList.getItemList(0, '', _id, $isAdmin);
         itemPageLock.set(false);
         itemMainLoading.set(false);
       }

@@ -20,7 +20,7 @@
   let elementScroll:any;
   let data:any;
 
-  itemList.getItemList(0);
+  itemList.getItemList(0,'',0, $isAdmin);
   $: data = $itemList; 
 
   const onOpenModalItemForm = () => {
@@ -56,7 +56,8 @@
         size: 15,
         itemName: $itemSearch,
         categoryId: $itemCategorySelected,
-      }
+        adminYn: $isAdmin ? "Y" : "N"
+    }
     const response = await axios.get("/api/user/items", {params});
     itemList.update(items => {
       items.list = [...items.list, ...response.data.data.list]
@@ -92,9 +93,17 @@
   </div>        
   {/if}                
   {#if data}
-    {#each data.list as item (item.itemId)}
-      <Item item={item} />
-    {/each}
+    {#if $isAdmin}
+      {#each data.list as item (item.itemId)}
+        <Item item={item} />
+      {/each}
+      {:else}
+      {#each data.list as item (item.itemId)}
+        {#if item.displayYn === "Y"}
+          <Item item={item} />
+        {/if}
+      {/each}
+    {/if}
     {:else}
       {#if $itemMainLoading}
       <!-- Loading-box start-->

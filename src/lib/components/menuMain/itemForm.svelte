@@ -182,6 +182,10 @@
     modalActiveItem.closeModal();
   }
 
+  function handleSwitchChange(event:any) {
+    $itemFormValue.displayYn = event.target.checked ? 'Y' : 'N';
+  }
+
 </script>
 
 <Modal bind:modalActive={$modalActiveItem}>
@@ -210,13 +214,20 @@
         <div class="invalid-feedback was-validated">{errors.categoryId}</div>
       {/if}
     </div>            
-    <div class="mb-3">
+    <!-- <div class="mb-3">
       <label for="itemPrice" class="col-form-label">메뉴 가격:</label>
       <input type="text" class="form-control" id="itemPrice" bind:value={$itemFormValue.itemPrice} class:inputError={errors.itemPrice}>
       {#if errors.itemPrice}
         <div class="invalid-feedback was-validated">{errors.itemPrice}</div>
       {/if}
-    </div>
+    </div> -->
+    <!-- <div class="mb-3">
+      <label for="itemPrice" class="col-form-label">메뉴 옵션:</label>
+      <input type="text" class="form-control" id="itemPrice" bind:value={$itemFormValue.itemPrice} class:inputError={errors.itemPrice}>
+      {#if errors.itemPrice}
+        <div class="invalid-feedback was-validated">{errors.itemPrice}</div>
+      {/if}
+    </div> -->
     <div class="mb-3">
       <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
       <input type="file" class="form-control" id="itemImage" on:change={onUploadFile} class:inputError={errors.itemImage}>
@@ -233,6 +244,15 @@
           <img src="/images/noImage.jpg" class="card-img-top" alt="">
         </div>  -->
     {/if}
+    <div class="mb-3">
+      <label class="col-form-label" for="displayYn">메뉴 노출여부:</label>
+      <div class="form-check form-switch">
+        <input class="form-check-input form-control" style="width:4em; height:1.8em" type="checkbox" id="displayYn" checked={$itemFormValue.displayYn === 'Y'} on:change={handleSwitchChange}>
+      </div>
+      {#if errors.displayYn}
+        <div class="invalid-feedback was-validated">{errors.displayYn}</div>
+      {/if}
+    </div>
     
   </div>
   <!-- slot modal-body end -->      

@@ -20,6 +20,7 @@
     $itemFormValue.itemPrice = item.itemPrice;
     $itemFormValue.categoryId = item.categoryId;
     $itemFormValue.itemImage = item.itemImage;
+    $itemFormValue.displayYn = item.displayYn;
     
 
     let params = {
@@ -27,7 +28,8 @@
       itemName: item.itemName,
       itemPrice: item.itemPrice,
       categoryId: item.categoryId,
-      itemImage: item.itemImage
+      itemImage: item.itemImage,
+      displayYn: item.displayYn
     }
     itemFormValue.set(params);
     itemFormMode.onEditMode();

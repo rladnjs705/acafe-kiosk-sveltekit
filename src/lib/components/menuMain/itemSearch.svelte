@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { itemSearch, itemPage, itemList, itemPageLock, itemMainLoading } from "$stores";
+  import { itemSearch, itemPage, itemList, itemPageLock, itemMainLoading, isAdmin } from "$stores";
   import { onMount } from "svelte";
 
   let isMobile = false;
@@ -21,7 +21,7 @@
     if(keyCode === 13) {
       itemMainLoading.set(true);
       itemSearch.set(itemSearchForm);
-      itemList.getItemList($itemPage, $itemSearch);
+      itemList.getItemList($itemPage, $itemSearch, $isAdmin);
       itemPage.resetPage();
       itemPageLock.set(false);
     }
