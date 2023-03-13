@@ -186,6 +186,12 @@
     $itemFormValue.displayYn = event.target.checked ? 'Y' : 'N';
   }
 
+
+  //숫자만입력
+  function handleInput(event:any) {
+    $itemFormValue.itemOrder = event.target.value.replace(/\D/g,'');
+  }
+
 </script>
 
 <Modal bind:modalActive={$modalActiveItem}>
@@ -228,6 +234,13 @@
         <div class="invalid-feedback was-validated">{errors.itemPrice}</div>
       {/if}
     </div> -->
+    <div class="mb-3">
+      <label for="itemOrder" class="col-form-label">메뉴 순서:</label>
+      <input type="text" class="form-control" id="itemOrder" bind:value={$itemFormValue.itemOrder} on:input|preventDefault={handleInput} on:keydown={handleInput} class:inputError={errors.itemOrder} maxlength="3">
+      {#if errors.itemOrder}
+        <div class="invalid-feedback was-validated">{errors.itemOrder}</div>
+      {/if}
+    </div>
     <div class="mb-3">
       <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
       <input type="file" class="form-control" id="itemImage" on:change={onUploadFile} class:inputError={errors.itemImage}>

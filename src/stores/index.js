@@ -25,6 +25,7 @@ function setItemFormValue() {
     categoryId: '',
     itemPrice: 0,
     displayYn: 'Y',
+    itemOrder: 0,
     itemImage: 'http://localhost:3000/images/noImage.jpg',
   }
 
