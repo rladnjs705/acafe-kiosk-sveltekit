@@ -45,8 +45,8 @@
 <!-- order results start -->
 <ul>
   <!-- order one start -->
-  {#if orderList}
-    {#each orderList as order}
+  {#if orderList }
+    {#each orderList.reverse() as order}
       <li class="d-flex  flex-column p-4 order-result-list ">
         <div class="d-flex justify-content-between ">
           <ul class="order-inner-list">
@@ -62,7 +62,17 @@
                   <p class:orderChecked={!order.orderState}>{item.itemName}</p>
                   <p class:orderChecked={!order.orderState}>{item.itemCount}</p>
                 </li>   
-                <li class="d-flex justify-content-between ">
+                <li>
+                  {#if item.shot > 0}
+                    <p>- 샷 추가 : {item.shot}</p>
+                  {/if}
+                  {#if item.light === '100'}
+                    <p>- 농도 : 연하게</p>
+                  {:else if item.light === '200'}
+                    <p>- 농도 : 보통</p>
+                  {:else if item.light === '300'}
+                    <p>- 농도 : 진하게</p>
+                  {/if}
                   <!-- <p>가격(개당: {item.itemPrice})</p> -->
                   <!-- <p>{item.itemPriceSum}</p> -->
                 </li>                   

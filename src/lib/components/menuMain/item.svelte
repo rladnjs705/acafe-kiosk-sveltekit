@@ -1,6 +1,6 @@
 <script lang="ts">
   export let item:any;
-  import { itemFormMode, itemFormValue, modalActiveItem, isAdmin, orders, auth, orderErrors } from '$stores';
+  import { itemFormMode, itemFormValue, modalActiveItem, isAdmin, orders, auth, orderErrors, modalActiveOptionOrder, itemOption } from '$stores';
   import { onMount } from "svelte";
 
   let isMobile = false;
@@ -43,8 +43,13 @@
       openEditModeActiveItem();
     }
     else {
-      orderErrors.resetErrors();
-      orders.incrementOrder(item, $auth);
+      if(item.categoryId === 1){
+        modalActiveOptionOrder.set(true);
+        itemOption.set(item);
+      } else{
+        orderErrors.resetErrors();
+        orders.incrementOrder(item, $auth);
+      }
     }
   }
 

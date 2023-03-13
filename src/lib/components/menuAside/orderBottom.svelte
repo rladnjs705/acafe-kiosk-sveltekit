@@ -5,6 +5,7 @@
   import { Notyf } from 'notyf';
   import 'notyf/notyf.min.css';
   import Swal from 'sweetalert2';
+  
   const notyf = new Notyf({
     duration: 5000,
     position: {

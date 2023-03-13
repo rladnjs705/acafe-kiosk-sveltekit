@@ -12,11 +12,21 @@
   }
 </script>
 <ul>
-  {#each orderList as item (item.itemId) }
+  {#each orderList as item }
     <li class="d-flex p-4 align-items-center">
       <div class="order-title-box d-flex flex-column justify-content-between ">
         <h4>{item.itemName}</h4>
         <!-- <p class="price-sum">{item.itemPriceSum}</p> -->
+        {#if item.shot > 0}
+          <p>- 샷 추가 : {item.shot}</p>
+        {/if}
+        {#if item.light === '100'}
+            <p>- 농도 : 연하게</p>
+        {:else if item.light === '200'}
+            <p>- 농도 : 보통</p>
+        {:else if item.light === '300'}
+            <p>- 농도 : 진하게</p>
+        {/if}
       </div>
       <div class="order-btn-box d-flex justify-content-end ">
         <button class="btn btn-ui ml-1" on:click={() => onDecrementOrder(item)}><i class='bx bx-minus'></i></button>

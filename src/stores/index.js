@@ -218,18 +218,21 @@ function setOrders() {
         let userId = auth._id;
 
         const duplicateCheckOrderItem = orderItems.find(item => item.itemId === getOrder.itemId);
+        const shotCheckOrderItem = orderItems.find(item => item.shot === getOrder.shot);
+        const lightCheckOrderItem = orderItems.find(item => item.light === getOrder.light);
 
-        if(duplicateCheckOrderItem) {
-          //선택된 item이 orderItems에 이미 있는경우
+        if(duplicateCheckOrderItem && shotCheckOrderItem && lightCheckOrderItem) {
+          //선택된 item이 orderItems에 이미 있고, 샷추가, 농도가 같은경우
           orderItems = orderItems.map(item => {
-            if(item.itemId === getOrder.itemId) {
+            if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light) {
               item.itemPriceSum = item.itemPriceSum + getOrder.itemPrice;
               item.itemCount = item.itemCount + 1;
-            }
+              item.shot = getOrder.shot;
+              item.light = getOrder.light;
+            } 
             return item;
           });
-        }
-        else {
+        } else {
           //선택된 item이 orderItems에 없는 경우
           const newOrder = {
             userId: auth._id,
@@ -237,6 +240,8 @@ function setOrders() {
             itemName: getOrder.itemName,
             itemPrice: getOrder.itemPrice,
             itemPriceSum: getOrder.itemPrice,
+            shot : getOrder.shot,
+            light : getOrder.light,
             itemCount: 1,
           }
           orderItems = [...orderItems, newOrder];
@@ -249,6 +254,8 @@ function setOrders() {
         datas.orderCount = orderCount;
         datas.orderItems = orderItems;
         datas.userId = userId;
+
+        console.log(orderItems);
 
         return datas;
       }
@@ -401,6 +408,32 @@ function setOrderErrors () {
   }
 }
 
+function setItemOption(){
+  const initValues = {
+    itemId: '',
+    itemName: '',
+    categoryId: '',
+    itemPrice: 0,
+    displayYn: 'Y',
+    itemOrder: 0,
+    shot:0,
+    light:'200',
+    itemImage: 'http://localhost:3000/images/noImage.jpg',
+  }
+  
+  const { subscribe, update, set } = writable({...initValues});
+  const resetForm = () => set({...initValues});
+
+  return {
+    subscribe,
+    update,
+    set,
+    resetForm
+  }
+
+
+}
+
 export const modalActiveCategory = writable(false);
 export const modalActiveItem = setModalActiveItem();
 export const itemFormValue = setItemFormValue();
@@ -414,9 +447,10 @@ export const auth = setAuth();
 export const isAdmin = setIsAdmin();
 export const orders = setOrders();
 export const orderErrors = setOrderErrors();
-export const modalActiveComplateOrder = writable(false);
+export const modalActiveOptionOrder = writable(false);
 export const itemMainLoading = writable(false);
 export const itemPageLoading = writable(false);
 export const categoryList = setCategoryList();
 export const itemList = setItemList();
 export const orderStream = setOrderStream();
+export const itemOption = setItemOption();

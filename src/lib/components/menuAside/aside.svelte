@@ -2,10 +2,10 @@
   import OrderList from './orderList.svelte';
   import OrderBottom from './orderBottom.svelte';
   import OrderResultList from './orderResultList.svelte';
+  import OrderOption from './orderOption.svelte';
   import { authToken, auth, isAdmin, orders, itemCategorySelected } from '$stores';
   import { goto } from '$app/navigation';
   import { onMount } from 'svelte';
-  import { ALL } from '$utils/constans';
 
 	let isMobile = false;
 
@@ -79,3 +79,5 @@
     <!-- order bottom end -->
   </div>
 </aside><!-- end aside -->    
+
+<OrderOption />
