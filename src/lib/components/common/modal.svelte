@@ -1,7 +1,11 @@
 <script>
   import { fly, fade } from 'svelte/transition';
+  import { itemOption } from '$stores';
   export let modalActive = false;
-  const closeModal = () => modalActive = false;
+  const closeModal = () => { 
+    modalActive = false
+    itemOption.resetForm();
+  };
 </script>
 
 {#if modalActive}

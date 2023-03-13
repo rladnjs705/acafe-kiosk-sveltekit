@@ -220,17 +220,17 @@ function setOrders() {
         const duplicateCheckOrderItem = orderItems.find(item => item.itemId === getOrder.itemId);
         const shotCheckOrderItem = orderItems.find(item => item.shot === getOrder.shot);
         const lightCheckOrderItem = orderItems.find(item => item.light === getOrder.light);
-        const typeCheckOrderItem = orderItems.find(item => item.coffeType === getOrder.coffeType);
+        const typeCheckOrderItem = orderItems.find(item => item.coffeeType === getOrder.coffeeType);
 
         if(duplicateCheckOrderItem && shotCheckOrderItem && lightCheckOrderItem && typeCheckOrderItem) {
           //선택된 item이 orderItems에 이미 있고, 샷추가, 농도가 같은경우
           orderItems = orderItems.map(item => {
-            if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light && item.coffeType === getOrder.coffeType) {
+            if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light && item.coffeeType === getOrder.coffeeType) {
               item.itemPriceSum = item.itemPriceSum + getOrder.itemPrice;
               item.itemCount = item.itemCount + 1;
               item.shot = getOrder.shot;
               item.light = getOrder.light;
-              item.coffeType = getOrder.coffeType;
+              item.coffeeType = getOrder.coffeeType;
             } 
             return item;
           });
@@ -244,7 +244,7 @@ function setOrders() {
             itemPriceSum: getOrder.itemPrice,
             shot : getOrder.shot,
             light : getOrder.light,
-            coffeType : getOrder.coffeType,
+            coffeeType : getOrder.coffeeType,
             itemCount: 1,
           }
           orderItems = [...orderItems, newOrder];
@@ -415,9 +415,9 @@ function setItemOption(){
     itemPrice: 0,
     displayYn: 'Y',
     itemOrder: 0,
-    shot:0,
-    light:'200',
-    coffeType: '200',
+    shot: 0,
+    light: '200',
+    coffeeType: '200',
     itemImage: 'http://localhost:3000/images/noImage.jpg',
   }
   

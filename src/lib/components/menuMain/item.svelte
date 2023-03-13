@@ -45,6 +45,9 @@
     else {
       if(item.categoryId === 1){
         modalActiveOptionOrder.set(true);
+        item.shot = 0;
+        item.light = '200';
+        item.coffeeType = '200';
         itemOption.set(item);
       } else{
         orderErrors.resetErrors();
