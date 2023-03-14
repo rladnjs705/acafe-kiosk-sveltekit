@@ -43,8 +43,8 @@
       openEditModeActiveItem();
     }
     else {
-      //카테고리가 커피,티 인 경우
-      if(item.categoryId === 1 || item.categoryId === 5){
+      //카테고리가 커피,음료,티 인 경우
+      if(item.categoryId === 1 || item.categoryId === 4 || item.categoryId === 5){
         modalActiveOptionOrder.set(true);
         item.shot = 0;
         item.light = '200';
