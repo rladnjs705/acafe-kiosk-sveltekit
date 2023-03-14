@@ -17,23 +17,27 @@
         <div class="order-title-box d-flex flex-column justify-content-between ">
           <h4>
             {#if item.coffeeType === '100'}
-              ( HOT )
+              ( <span style="color:red;">HOT</span> )
             {:else if item.coffeeType === '200'}
-              ( ICE )
+              ( <span style="color:blue;">ICE</span> )
             {/if}
             {item.itemName} 
           </h4>
           <!-- <p class="price-sum">{item.itemPriceSum}</p> -->
-          {#if item.shot > 0}
-            <p>- 샷 추가 : {item.shot}</p>
-          {/if}
-          {#if item.light === '100'}
-              <p>- 농도 : 연하게</p>
-          {:else if item.light === '200'}
-              <p>- 농도 : 보통</p>
-          {:else if item.light === '300'}
-              <p>- 농도 : 진하게</p>
-          {/if}
+            <div class="mt-2">
+              {#if item.shot > 0}
+                <p>- 샷 추가 : <span style="font-weight: 600;">{item.shot}</span></p>
+              {/if}
+            </div>
+            <div class="my-2 mb-3">
+              {#if item.light === '100'}
+                <p style="color: gray; font-weight: 600;">- 농도 : 연하게</p>
+              {:else if item.light === '300'}
+                <p style="color: brown; font-weight: 600;">- 농도 : 진하게</p>
+              {/if}
+            </div>
+            <!-- <p>가격(개당: {item.itemPrice})</p> -->
+            <!-- <p>{item.itemPriceSum}</p> -->
         </div>
         <div class="order-btn-box d-flex justify-content-end ">
           <button class="btn btn-ui ml-1" on:click={() => onDecrementOrder(item)}><i class='bx bx-minus'></i></button>

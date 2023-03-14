@@ -217,12 +217,15 @@ function setOrders() {
         let orderItems = datas.orderItems;
         let userId = auth._id;
 
-        const duplicateCheckOrderItem = orderItems.find(item => item.itemId === getOrder.itemId);
-        const shotCheckOrderItem = orderItems.find(item => item.shot === getOrder.shot);
-        const lightCheckOrderItem = orderItems.find(item => item.light === getOrder.light);
-        const typeCheckOrderItem = orderItems.find(item => item.coffeeType === getOrder.coffeeType);
+        const duplicateCheckOrderItem = orderItems.find(item => {
+          if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light && item.coffeeType === getOrder.coffeeType){
+            return item
+          }else{
+            return undefined;
+          }
+        });
 
-        if(duplicateCheckOrderItem && shotCheckOrderItem && lightCheckOrderItem && typeCheckOrderItem) {
+        if(duplicateCheckOrderItem) {
           //선택된 item이 orderItems에 이미 있고, 샷추가, 농도가 같은경우
           orderItems = orderItems.map(item => {
             if(item.itemId === getOrder.itemId && item.shot === getOrder.shot && item.light === getOrder.light && item.coffeeType === getOrder.coffeeType) {
@@ -235,6 +238,7 @@ function setOrders() {
             return item;
           });
         } else {
+
           //선택된 item이 orderItems에 없는 경우
           const newOrder = {
             userId: auth._id,
@@ -411,7 +415,7 @@ function setItemOption(){
   const initValues = {
     itemId: '',
     itemName: '',
-    categoryId: '',
+    categoryId: 0,
     itemPrice: 0,
     displayYn: 'Y',
     itemOrder: 0,

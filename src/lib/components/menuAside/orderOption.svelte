@@ -12,40 +12,51 @@
     }
   });
 
+  let shot = 0;
+  let lightWeight = '200';
+  let coffeeType = '200';
+
   $:$itemOption;
 
-  console.log($itemOption)
-  console.log($itemOption.coffeeType)
-
   const onAddOption = async () => {
-      
+      if($itemOption.categoryId === 1){
+        $itemOption.shot = shot;
+        $itemOption.light = lightWeight;
+        $itemOption.coffeeType = coffeeType;
+      }else if ($itemOption.categoryId === 5){
+        $itemOption.shot = 0;
+        $itemOption.light = '200';
+        $itemOption.coffeeType = coffeeType;
+      }
+
       //옵션 선택 로직
-      orderErrors.resetErrors();
       orders.incrementOrder($itemOption, $auth);
-      modalActiveOptionOrder.set(false);
+      orderErrors.resetErrors();
       clearItemForm();
+      modalActiveOptionOrder.set(false);
   }
 
   const onAddShot = () => {
-    $itemOption.shot += 1;
-    if($itemOption.shot > 2){
+    if(shot > 2){
       notyf.error('샷추가는 최대 2샷까지만 가능합니다');
-      $itemOption.shot = 2;
+      shot = 2;
+    }else{
+      shot += 1;
     }
   }
 
   const onHandleLight = (light:string) => {
-    $itemOption.light = light;
+    lightWeight = light;
   }
   
   const onHandleCoffeeType = (type:string) => {
-    $itemOption.coffeeType = type;
+    coffeeType = type;
   }
 
   const clearItemForm = () => {
-    $itemOption.shot = 0;
-    $itemOption.light = '200';
-    $itemOption.coffeeType = '200';
+    shot = 0;
+    lightWeight = '200';
+    coffeeType = '200';
     itemOption.resetForm();
   }
 </script>
@@ -60,33 +71,34 @@
           <div class="order-btn-box d-flex justify-content-start pt-2">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.coffeeType==='100'} on:click={() => onHandleCoffeeType('100')}>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={coffeeType==='100'} on:click={() => onHandleCoffeeType('100')}>
                 <img class="img-box" src="/images/hot-icon.png" alt="HOT" style="width:6em; height:6em;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.coffeeType === '100'}>HOT</h6>
+                  <h6 class:selected={coffeeType === '100'}>HOT</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.coffeeType==='200'} on:click={() => onHandleCoffeeType('200')}>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={coffeeType==='200'} on:click={() => onHandleCoffeeType('200')}>
                 <img class="img-box" src="/images/cold-icon.png" alt="ICE" style="width:6em; height:6em;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.coffeeType === '200'}>ICE</h6>
+                  <h6 class:selected={coffeeType === '200'}>ICE</h6>
                 </div>
               </a>
           </div>
         </div>
       </div>
-      <h4>추가 선택 (기본2샷 {$itemOption.shot > 0 ? `+ ${$itemOption.shot}` : ''})</h4>
+      {#if $itemOption.categoryId === 1}
+      <h4>추가 선택 (기본2샷 {shot > 0 ? `+ ${shot}` : ''})</h4>
       <div class="row row-cols-3 g-2 pl-1 pr-3 pt-2 pb-4 list-bg-shadow">
         <div class="col mb-2">
           <div class="order-btn-box d-flex justify-content-start pt-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-            <a class="btn card ct-shadow-sm menu-item-box" class:selected={$itemOption.shot > 0} on:click={onAddShot}>
+            <a class="btn card ct-shadow-sm menu-item-box" class:selected={shot > 0} on:click={onAddShot}>
               <img class="img-box" src="/images/espresso.jpg" alt="espresso" style="width: 100%; height:100%;">
               <div class="card-body">
-                <h6 class:selected={$itemOption.shot > 0}>샷추가</h6>
+                <h6 class:selected={shot > 0}>샷추가</h6>
               </div>
             </a>
           </div>
@@ -98,31 +110,32 @@
           <div class="order-btn-box d-flex justify-content-start pt-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='100'} on:click={() => onHandleLight('100')}>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={lightWeight==='100'} on:click={() => onHandleLight('100')}>
                 <img class="img-box" src="/images/option_mild.png" alt="Mild" style="width:8em; height:4em;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='100'}>연하게</h6>
+                  <h6 class:selected={lightWeight==='100'}>연하게</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='200'} on:click={() => onHandleLight('200')}>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={lightWeight==='200'} on:click={() => onHandleLight('200')}>
                 <img class="img-box" src="/images/option_medium.png" alt="Medium" style="width:8em; height:4em;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='200'}>보통</h6>
+                  <h6 class:selected={lightWeight==='200'}>보통</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='300'} on:click={() => onHandleLight('300')}>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={lightWeight==='300'} on:click={() => onHandleLight('300')}>
                 <img class="img-box" src="/images/option_dark.png" alt="Dark" style="width:8em; height:4em;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='300'}>진하게</h6>
+                  <h6 class:selected={lightWeight==='300'}>진하게</h6>
                 </div>
               </a>
           </div>
         </div>
       </div>
+      {/if}
     </div>
   </div>
   <div class="modal-footer" slot="modal-footer" >
