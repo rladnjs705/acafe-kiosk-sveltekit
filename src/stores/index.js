@@ -163,7 +163,7 @@ function setAuth() {
       data.params.authToken = isLoginToken;
       const response = await axios.get("/api/user/login/info",data);
       const userInfo = response.data.data.user;
-      const _id = userInfo.id;
+      const _id = userInfo.userId;
       const email = userInfo.email;
       const role = userInfo.role;
       const nickName = userInfo.nickName;
