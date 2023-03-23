@@ -1,29 +1,44 @@
 <script lang="ts">
   import axios from "axios";
+    import { onDestroy } from "svelte";
   let orderList:any[];
-
+  let isCheck= true;
+  let timeOut:any;
   getOrdersStream();
 
   async function getOrdersStream() {
-    await axios.get("/api/admin/orders/stream")
-    .then(data => {
-      orderList = data.data.data.list;
-      getOrders();
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    try {
+      await axios.get("/api/admin/orders/stream")
+      .then(data => {
+        orderList = data.data.data.list;
+        getOrders();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async function getOrders() {
-    await axios.get("/api/admin/orders/subscribe")
-    .then(data => {
-      orderList = data.data;
-      getOrders();
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    try {
+      await axios.get("/api/admin/orders/subscribe")
+      .then(data => {
+        orderList = data.data;
+        if(isCheck){
+          timeOut = setTimeout(() => {
+            getOrders()
+          }, 1000);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    } 
+    catch (error) {
+     console.log(error);
+    }
   }
 
   const onCheckOrder = async (orderId:any, orderState:any) => {
@@ -40,6 +55,11 @@
       console.log(error);
     }
   }
+
+  onDestroy(() => {
+    clearTimeout(timeOut);
+    isCheck=false;
+  })
 
 </script>
 <!-- order results start -->
