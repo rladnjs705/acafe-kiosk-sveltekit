@@ -31,9 +31,9 @@
             </div>
             <div class="my-2 mb-3">
               {#if item.light === '100'}
-                <p style="color: gray; font-weight: 600;">- 농도 : 연하게</p>
+                <p style="color: gray; font-weight: 600;">- 얼음 : 적음</p>
               {:else if item.light === '300'}
-                <p style="color: brown; font-weight: 600;">- 농도 : 진하게</p>
+                <p style="color: brown; font-weight: 600;">- 얼음 : 많음</p>
               {/if}
             </div>
             <!-- <p>가격(개당: {item.itemPrice})</p> -->

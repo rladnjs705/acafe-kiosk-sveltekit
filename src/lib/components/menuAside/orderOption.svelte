@@ -94,22 +94,22 @@
           </div>
         </div>
       </div>
-      <h4>농도 선택</h4>
+      <h4>얼음 선택</h4>
       <div class="row g-2 pl-1 pr-3 pt-2 pb-4 list-bg-shadow">
         <div class="col mb-2">
           <div class="order-btn-box d-flex justify-content-start pt-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
               <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='100'} on:click={() => onHandleLight('100')}>
-                <img class="img-box" src="/images/option_mild.png" alt="Mild" style="width:8em; height:4em;">
+                <img class="img-box" src="/images/ice_less.png" alt="Less" style="width:8em; height:4em; padding: 10px; padding-left: 20px; padding-right: 20px;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='100'}>연하게</h6>
+                  <h6 class:selected={$itemOption.light==='100'}>얼음적게</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
               <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='200'} on:click={() => onHandleLight('200')}>
-                <img class="img-box" src="/images/option_medium.png" alt="Medium" style="width:8em; height:4em;">
+                <img class="img-box" src="/images/ice_normal.png" alt="Normal" style="width:8em; height:4em; padding-left: 15px; padding-right: 15px;">
                 <div class="card-body">
                   <h6 class:selected={$itemOption.light==='200'}>보통</h6>
                 </div>
@@ -117,9 +117,9 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
               <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='300'} on:click={() => onHandleLight('300')}>
-                <img class="img-box" src="/images/option_dark.png" alt="Dark" style="width:8em; height:4em;">
+                <img class="img-box" src="/images/ice_lots.png" alt="Lots" style="width:8em; height:4em; padding-left: 10px; padding-right: 10px;">
                 <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='300'}>진하게</h6>
+                  <h6 class:selected={$itemOption.light==='300'}>얼음많이</h6>
                 </div>
               </a>
           </div>
