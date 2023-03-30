@@ -158,6 +158,7 @@
       console.log(response);
       if(response.status == 200){
         $itemFormValue.itemImage = response.data.data.link;
+        $itemFormValue.itemImage += "?format=webp&width=225&height=225";
         return upload;
       }
 
