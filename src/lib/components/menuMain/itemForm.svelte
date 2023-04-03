@@ -244,7 +244,7 @@
     </div>
     <div class="mb-3">
       <label for="itemImage" class="col-form-label">메뉴 이미지:</label>
-      <input type="file" class="form-control" id="itemImage" on:change={onUploadFile} class:inputError={errors.itemImage}>
+      <input type="file" class="form-control" id="itemImage" on:change={onUploadFile} class:inputError={errors.itemImage} accept="image/*">
       {#if errors.itemImage}
         <div class="invalid-feedback was-validated">{errors.itemImage}</div>
       {/if}
