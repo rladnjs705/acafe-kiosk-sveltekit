@@ -61,17 +61,17 @@
           <div class="order-btn-box d-flex justify-content-start pt-2">
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.coffeeType==='100'} on:click={() => onHandleCoffeeType('100')}>
-                <img class="img-box" src="/images/hot-icon.png" alt="HOT" style="width:6em; height:6em;">
-                <div class="card-body">
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.coffeeType==='100'} on:click={() => onHandleCoffeeType('100')} style="height:8em;">
+                <img class="img-box" src="/images/hot-icon.png" alt="HOT" style="width:100%; height:100%; padding: 1em;">
+                <div style="margin-bottom:10px;">
                   <h6 class:selected={$itemOption.coffeeType === '100'}>HOT</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.coffeeType==='200'} on:click={() => onHandleCoffeeType('200')}>
-                <img class="img-box" src="/images/cold-icon.png" alt="ICE" style="width:6em; height:6em;">
-                <div class="card-body">
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.coffeeType==='200'} on:click={() => onHandleCoffeeType('200')} style="height:8em;">
+                <img class="img-box" src="/images/cold-icon.png" alt="ICE" style="width:100%; height:100%; padding: 1em;">
+                <div style="margin-bottom:10px;">
                   <h6 class:selected={$itemOption.coffeeType === '200'}>ICE</h6>
                 </div>
               </a>
@@ -85,10 +85,10 @@
           <div class="order-btn-box d-flex justify-content-start pt-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-            <a class="btn card ct-shadow-sm menu-item-box" class:selected={$itemOption.shot > 0} on:click={onAddShot}>
-              <img class="img-box" src="/images/espresso.jpg" alt="espresso" style="width: 100%; height:100%;">
-              <div class="card-body">
-                <h6 class:selected={$itemOption.shot > 0}>샷추가</h6>
+            <a class="btn card ct-shadow-sm menu-item-box" class:selected={$itemOption.shot > 0} on:click={onAddShot} style="height:8em;">
+              <img class="img-box" src="/images/espresso.jpg" alt="espresso" style="width: 100%; height:100%; padding: 0.25em;">
+              <div>
+                <h6 class:selected={$itemOption.shot > 0} style="font-size: 12px;">샷추가</h6>
               </div>
             </a>
           </div>
@@ -100,26 +100,26 @@
           <div class="order-btn-box d-flex justify-content-start pt-2">
             <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='100'} on:click={() => onHandleLight('100')}>
-                <img class="img-box" src="/images/ice_less.png" alt="Less" style="width:8em; height:4em; padding: 10px; padding-left: 20px; padding-right: 20px;">
-                <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='100'}>얼음적게</h6>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='100'} on:click={() => onHandleLight('100')} style="height:8em;">
+                <img class="img-box" src="/images/ice_less.png" alt="Less" style="width:100%; height:100%; padding: 0.25em;">
+                <div>
+                  <h6 class:selected={$itemOption.light==='100'} style="font-size: 12px;">얼음적게</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='200'} on:click={() => onHandleLight('200')}>
-                <img class="img-box" src="/images/ice_normal.png" alt="Normal" style="width:8em; height:4em; padding-left: 15px; padding-right: 15px;">
-                <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='200'}>보통</h6>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='200'} on:click={() => onHandleLight('200')} style="height:8em;">
+                <img class="img-box" src="/images/ice_normal.png" alt="Normal" style="width:100%; height:100%;">
+                <div>
+                  <h6 class:selected={$itemOption.light==='200'} style="font-size: 12px;">보통</h6>
                 </div>
               </a>
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <!-- svelte-ignore a11y-missing-attribute -->
-              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='300'} on:click={() => onHandleLight('300')}>
-                <img class="img-box" src="/images/ice_lots.png" alt="Lots" style="width:8em; height:4em; padding-left: 10px; padding-right: 10px;">
-                <div class="card-body">
-                  <h6 class:selected={$itemOption.light==='300'}>얼음많이</h6>
+              <a class="btn card ct-shadow-sm menu-item-box mx-2" class:selected={$itemOption.light==='300'} on:click={() => onHandleLight('300')} style="height:8em;">
+                <img class="img-box" src="/images/ice_lots.png" alt="Lots" style="width:100%; height:100%;">
+                <div>
+                  <h6 class:selected={$itemOption.light==='300'} style="font-size: 12px;">얼음많이</h6>
                 </div>
               </a>
           </div>
